@@ -8,8 +8,8 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/meze_db
-    username: postgres
-    password: 123sa
+    username: meze_db_user
+    password: 3cvMpELFZ6bKgEX6U0XVJx9jC5c73gfP
     driver-class-name: org.postgresql.Driver
     hikari:
       auto-commit: false

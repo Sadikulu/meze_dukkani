@@ -3,7 +3,7 @@
 #
 FROM maven:3.8.1-jdk-11 AS build
 COPY . .
-RUN mvn clean package -Pprod -DskipTests
+RUN mvn clean package
 
 #
 # Package stage

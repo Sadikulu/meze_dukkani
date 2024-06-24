@@ -1,13 +1,16 @@
-# Aşama 1: Derleme aşaması
-FROM maven:3.6.3-openjdk-11-slim AS build
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+FROM ubuntu:latest AS build
 
-# Aşama 2: Çalışma aşaması
-FROM openjdk:11-jre-slim
-WORKDIR /app
-COPY --from=build /app/target/meze-0.0.1-SNAPSHOT /app/meze.jar
+RUN apt-get update
+RUN apt-get install openjdk-17-jdk -y
+COPY src .
+
+RUN apt-get install maven -y
+RUN mvn clean install
+
+FROM openjdk:17-jdk-slim
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "meze.jar"]
+
+COPY --from=build /target/meze-0.0.1-SNAPSHOT.jar meze.jar
+
+ENTRYPOINT ["java","-jar","meze.jar"]

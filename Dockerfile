@@ -1,18 +1,13 @@
-# Temel imaj olarak resmi OpenJDK imajını kullan
-FROM openjdk:11-jre-slim
-
-# Maven imajını kullanarak uygulamayı derle
-# Bu aşamada uygulama kaynak kodunu kopyalayın ve derleyin
+# Aşama 1: Derleme aşaması
 FROM maven:3.6.3-openjdk-11-slim AS build
+WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Derlenen JAR dosyasını hedef imajımıza kopyala
-COPY --from=build /target/meze-0.0.1-SNAPSHOT.jar meze.jar
-
-# Uygulamanın çalıştırılacağı portu belirt
+# Aşama 2: Çalışma aşaması
+FROM openjdk:11-jre-slim
+WORKDIR /app
+COPY --from=build /app/target/meze-0.0.1-SNAPSHOT /app/meze.jar
 EXPOSE 8080
-
-# Uygulamayı başlat
 ENTRYPOINT ["java", "-jar", "meze.jar"]

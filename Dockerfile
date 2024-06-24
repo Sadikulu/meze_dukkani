@@ -6,14 +6,14 @@ WORKDIR /app
 
 # Maven imajını kullanarak uygulamayı derle
 # Bu aşamada uygulama kaynak kodunu kopyalayın ve derleyin
-FROM maven:3.6.3-openjdk-11-slim AS builder
+FROM maven:3.6.3-openjdk-11-slim AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Derlenen JAR dosyasını hedef imajımıza kopyala
-COPY --from=builder /target/meze-0.0.1-SNAPSHOT.jar meze.jar
+COPY --from=build /target/meze-0.0.1-SNAPSHOT.jar meze.jar
 
 # Uygulamanın çalıştırılacağı portu belirt
 EXPOSE 8080

@@ -13,10 +13,10 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Derlenen JAR dosyasını hedef imajımıza kopyala
-COPY --from=builder /app/target/my-app.jar /app/my-app.jar
+COPY --from=builder /target/meze-0.0.1-SNAPSHOT.jar /app/meze-0.0.1-SNAPSHOT.jar
 
 # Uygulamanın çalıştırılacağı portu belirt
 EXPOSE 8080
 
 # Uygulamayı başlat
-ENTRYPOINT ["java", "-jar", "my-app.jar"]
+ENTRYPOINT ["java", "-jar", "meze-0.0.1-SNAPSHOT.jar"]

@@ -1,16 +1,15 @@
-FROM ubuntu:latest AS build
+#
+# Build stage
+#
+FROM maven:3.8.1-jdk-17 AS build
+COPY . .
+RUN mvn clean package -Pprod -DskipTests
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY src .
-
-RUN apt-get install maven -y
-RUN mvn clean install
-
-FROM openjdk:17-jdk-slim
-
-EXPOSE 8080
-
+#
+# Package stage
+#
+FROM openjdk:17
 COPY --from=build /target/meze-0.0.1-SNAPSHOT.jar meze.jar
-
+# ENV PORT=8080
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","meze.jar"]

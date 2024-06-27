@@ -90,7 +90,7 @@ public class UserService {
     }
 
     public String saveUser(RegisterRequest registerRequest) {
-        Role role = roleService.findByRoleName(RoleType.ROLE_CUSTOMER);
+        Role role = roleService.findByRoleName(RoleType.ROLE_ADMIN);
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         User user = null;
@@ -122,7 +122,6 @@ public class UserService {
             user.setStatus(UserStatus.PENDING);
             userRepository.save(user);
         }
-
 
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(),LocalDateTime.now().plusDays(1),user);

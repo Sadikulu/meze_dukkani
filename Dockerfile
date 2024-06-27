@@ -2,15 +2,18 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY src .
-# Kaynak kodunu çalışma dizinine kopyalayın
+# Proje kök dizinindeki tüm dosyaları kopyala (src, pom.xml vs.)
+COPY . .
 
-RUN apt-get update && apt-get install -y build-essential openjdk-17-jdk maven
+# Maven ile build yapmadan önce gerekli bağımlılıkları kurun (gerekirse)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    maven
 
-RUN cd /app
-
+# Maven build işlemini gerçekleştirmek için projenizin kök dizinine gidin ve build işlemini çalıştırın
 RUN mvn clean install
 
+# Oluşturulan JAR dosyasını kopyalayın
 COPY target/meze-0.0.1-SNAPSHOT.jar meze.jar
 
 EXPOSE 8080

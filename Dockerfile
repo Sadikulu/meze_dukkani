@@ -6,9 +6,7 @@ WORKDIR /app
 COPY . .
 
 # Maven ile build yapmadan önce gerekli bağımlılıkları kurun (gerekirse)
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    maven
+RUN apt-get update && apt-get install -y
 
 # Maven build işlemini gerçekleştirmek için projenizin kök dizinine gidin ve build işlemini çalıştırın
 RUN mvn clean install

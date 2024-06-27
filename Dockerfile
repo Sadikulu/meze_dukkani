@@ -1,22 +1,16 @@
-FROM temurin:17-alpine AS builder
+FROM ubuntu:latest AS build
 
-WORKDIR /app
+RUN apt-get update
+RUN apt-get install openjdk-17-jdk -y
+COPY src .
 
-COPY target/*.jar app.jar  # JAR dosyasını builder aşamasından önce kopyalayın
+RUN apt-get install maven -y
+RUN mvn clean install
 
-RUN apk add --no-cache openssl
-
-# COPY --from=builder /app/app.jar app.jar  - Bu satırı silin - gereksiz
-
-FROM openjdk:17-alpine
-
-WORKDIR /app
-
-COPY app.jar .
-
-ENV JAVA_HOME=/opt/jdk-17
-ENV PATH="$JAVA_HOME/bin:$PATH"
+FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY --from=build /target/meze-0.0.1-SNAPSHOT.jar meze.jar
+
+ENTRYPOINT ["java","-jar","meze.jar"]

@@ -1,7 +1,7 @@
 # Copy JAR file before building
 COPY target/*.jar app.jar
 
-FROM temurin:17-alpine AS builder
+FROM temurin:17-alpine AS build
 
 WORKDIR /app
 

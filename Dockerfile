@@ -1,7 +1,7 @@
 # Bu satırı silin
 # COPY target/*.jar app.jar
 
-FROM temurin:17-alpine AS build
+FROM temurin:17-alpine AS builder
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ COPY target/*.jar app.jar
 
 RUN apk add --no-cache openssl
 
-COPY --from=build /app/app.jar app.jar
+COPY --from=builder /app/app.jar app.jar
 
 FROM openjdk:17-alpine
 

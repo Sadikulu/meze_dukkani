@@ -1,16 +1,22 @@
-FROM ubuntu:latest AS build
+FROM openjdk:17-jdk-slim
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
+WORKDIR /app
+
 COPY src .
+# Kaynak kodunu çalışma dizinine kopyala
 
-RUN apt-get install maven -y
+# Maven ile build yapmadan önce gerekli bağımlılıkları kurun (gerekirse)
+RUN apt-get update && apt-get install -y \build-essential \openjdk-17-jdk \maven
+
+# Maven build işlemini gerçekleştirmek için projenizin kök dizinine gidin
+RUN cd /app
+
+# Maven build'u çalıştırın
 RUN mvn clean install
 
-FROM openjdk:17-jdk-slim
+# Oluşturulan JAR dosyasını kopyalayın
+COPY target/meze-0.0.1-SNAPSHOT.jar meze.jar
 
 EXPOSE 8080
 
-COPY --from=build /target/meze-0.0.1-SNAPSHOT.jar meze.jar
-
-ENTRYPOINT ["java","-jar","meze.jar"]
+ENTRYPOINT ["java", "-jar", "meze.jar"]

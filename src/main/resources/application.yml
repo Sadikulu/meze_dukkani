@@ -7,9 +7,9 @@ server:
 
 spring:
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://dpg-cprc0n3qf0us738cbv30-a:5432/meze_db
+    username: meze_db_user
+    password: 3cvMpELFZ6bKgEX6U0XVJx9jC5c73gfP
     driver-class-name: org.postgresql.Driver
     hikari:
       auto-commit: false

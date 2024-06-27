@@ -1,15 +1,14 @@
-# Bu satırı silin
-# COPY target/*.jar app.jar
-
 FROM temurin:17-alpine AS builder
 
 WORKDIR /app
 
 COPY target/*.jar app.jar
+# JAR dosyasını builder aşamasından önce kopyalayın
 
 RUN apk add --no-cache openssl
 
 COPY --from=builder /app/app.jar app.jar
+# Bu satırı silin - gereksiz
 
 FROM openjdk:17-alpine
 

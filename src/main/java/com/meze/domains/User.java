@@ -51,7 +51,7 @@ public class User {
     private String password;
 
     @Column(nullable = false)
-    private Boolean builtIn = true;
+    private Boolean builtIn = false;
 
     @Column
     private LocalDateTime createAt = LocalDateTime.now();

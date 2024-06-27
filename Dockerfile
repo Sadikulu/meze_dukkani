@@ -1,17 +1,22 @@
-FROM openjdk:17-alpine
+FROM temurin:17-alpine AS builder
 
 WORKDIR /app
 
 COPY target/*.jar app.jar
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache openssl
 
-RUN wget -O /opt/jdk-17.tar.gz https://download.java.net/openjdk/17.0.3/jdk-17.0.3-linux-x64.tar.gz
-RUN tar -xvf /opt/jdk-17.tar.gz
+COPY --from=builder /app/app.jar app.jar
+
+FROM openjdk:17-alpine
+
+WORKDIR /app
+
+COPY app.jar .
 
 ENV JAVA_HOME=/opt/jdk-17
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 EXPOSE 8080
 
-ENTRYPOINT ["/opt/jdk-17/bin/java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

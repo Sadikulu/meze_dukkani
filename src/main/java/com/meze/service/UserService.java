@@ -435,7 +435,7 @@ public class UserService {
                 authenticate(usernamePasswordAuthenticationToken);
         UserDetails userDetails  =  (UserDetails) authentication.getPrincipal() ;
         User user = getUserByEmail(userDetails.getUsername());
-        ShoppingCart anonymousCart = shoppingCartRepository.findByCartUUID(cartUUID).orElseThrow(()->
+        ShoppingCart anonymousCart = shoppingCartRepository.findByCartUUID(user.getShoppingCart().getCartUUID()).orElseThrow(()->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE,cartUUID)));
         ShoppingCart userCart = user.getShoppingCart();
         if (!anonymousCart.getShoppingCartItem().isEmpty()){

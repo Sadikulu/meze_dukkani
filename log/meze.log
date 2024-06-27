@@ -369,3 +369,16 @@ Caused by: java.lang.RuntimeException: Driver org.postgresql.Driver claims to no
 2024-06-27 12:48:10,451 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-06-27 12:48:10,456 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
 2024-06-27 12:48:10,471 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
+2024-06-27 17:30:28,394 INFO  [restartedMain] com.meze.MezeApplication:Starting MezeApplication using Java 18.0.2.1 on DESKTOP-PDIF9H6 with PID 9956 (C:\Users\sadik\Desktop\meze back\target\classes started by sadik in C:\Users\sadik\Desktop\meze back)
+2024-06-27 17:30:28,402 INFO  [restartedMain] com.meze.MezeApplication:No active profile set, falling back to 1 default profile: "default"
+2024-06-27 17:30:28,571 INFO  [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor:Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-06-27 17:30:28,572 INFO  [restartedMain] org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor:For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-06-27 17:30:33,103 INFO  [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-27 17:30:33,588 INFO  [restartedMain] org.springframework.data.repository.config.RepositoryConfigurationDelegate:Finished Spring Data repository scanning in 444 ms. Found 15 JPA repository interfaces.
+2024-06-27 17:30:35,697 INFO  [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat initialized with port(s): 8080 (http)
+2024-06-27 17:30:35,727 INFO  [restartedMain] org.apache.catalina.core.StandardService:Starting service [Tomcat]
+2024-06-27 17:30:35,728 INFO  [restartedMain] org.apache.catalina.core.StandardEngine:Starting Servlet engine: [Apache Tomcat/9.0.71]
+2024-06-27 17:30:35,982 INFO  [restartedMain] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring embedded WebApplicationContext
+2024-06-27 17:30:35,983 INFO  [restartedMain] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext:Root WebApplicationContext: initialization completed in 7410 ms
+2024-06-27 17:30:36,818 INFO  [restartedMain] org.hibernate.jpa.internal.util.LogHelper:HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-27 17:30:37,123 INFO  [restartedMain] org.hibernate.Version:HHH000412: Hibernate ORM core version 5.6.14.Final

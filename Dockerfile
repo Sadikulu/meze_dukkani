@@ -1,16 +1,17 @@
-FROM ubuntu:latest AS build
+FROM openjdk:17-alpine
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY src .
+WORKDIR /app
 
-RUN apt-get install maven -y
-RUN mvn clean install
+COPY target/*.jar app.jar
 
-FROM openjdk:17-jdk-slim
+RUN apk add --no-cache ca-certificates
+
+RUN wget -O /opt/jdk-17.tar.gz https://download.java.net/openjdk/17.0.3/jdk-17.0.3-linux-x64.tar.gz
+RUN tar -xvf /opt/jdk-17.tar.gz
+
+ENV JAVA_HOME=/opt/jdk-17
+PATH=$JAVA_HOME/bin:$PATH
 
 EXPOSE 8080
 
-COPY --from=build /target/meze-0.0.1-SNAPSHOT.jar meze.jar
-
-ENTRYPOINT ["java","-jar","meze.jar"]
+ENTRYPOINT ["/opt/jdk-17/bin/java", "-jar", "app.jar"]

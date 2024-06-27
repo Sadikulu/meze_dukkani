@@ -15,7 +15,7 @@ RUN cd /app
 RUN mvn clean install
 
 # Oluşturulan JAR dosyasını kopyalayın
-COPY target/meze-0.0.1-SNAPSHOT.jar meze.jar
+COPY app/target/meze-0.0.1-SNAPSHOT.jar meze.jar
 
 EXPOSE 8080
 

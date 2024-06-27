@@ -10,7 +10,7 @@ RUN wget -O /opt/jdk-17.tar.gz https://download.java.net/openjdk/17.0.3/jdk-17.0
 RUN tar -xvf /opt/jdk-17.tar.gz
 
 ENV JAVA_HOME=/opt/jdk-17
-PATH=$JAVA_HOME/bin:$PATH
+ENV PATH="$JAVA_HOME/bin:$PATH"
 
 EXPOSE 8080
 

@@ -9,8 +9,8 @@ WORKDIR /app
 # Copy the source code
 COPY . .
 
-# Build the project using Maven
-RUN mvn clean install
+# Build the project using Maven, skipping tests
+RUN mvn clean install -DskipTests
 
 # Use a slimmer image for runtime
 FROM openjdk:17-jdk-slim

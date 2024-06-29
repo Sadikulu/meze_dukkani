@@ -280,7 +280,7 @@ public class ProductService {
        return productMapper.productToProductDTO(product);
     }
 
-    public PageImpl<ProductDTO> findAllWithQueryAndPage(String query, List<Long> categoryId, List<Long> brandId,Integer minPrice, Integer maxPrice,ProductStatus status, Pageable pageable) {
+    public PageImpl<ProductDTO> findAllWithQueryAndPage(String query, List<Long> categoryId,Integer minPrice, Integer maxPrice,ProductStatus status, Pageable pageable) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = cb.createQuery(Product.class);
         Root<Product> root = criteriaQuery.from(Product.class);

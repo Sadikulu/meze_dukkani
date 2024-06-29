@@ -28,7 +28,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<PageImpl<ProductDTO>> getProducts(@RequestParam(value = "q",required = false) String query,
                                                             @RequestParam(value = "categories",required = false) List<Long> categoryId,
-                                                            @RequestParam(value = "brands",required = false) List<Long> brandId,
+                                                            //@RequestParam(value = "brands",required = false) List<Long> brandId,
                                                             @RequestParam(value = "minPrice",required = false) Integer minPrice,
                                                             @RequestParam(value = "maxPrice",required = false) Integer maxPrice,
                                                             @RequestParam(value = "status",required = false) ProductStatus status,
@@ -39,7 +39,7 @@ public class ProductController {
                                                                             required = false,
                                                                             defaultValue = "DESC") Direction direction){
         Pageable pageable = PageRequest.of(page,size, Sort.by(direction,prop));
-        PageImpl<ProductDTO> productDTO = productService.findAllWithQueryAndPage(query,categoryId,brandId,minPrice,maxPrice,status,pageable);
+        PageImpl<ProductDTO> productDTO = productService.findAllWithQueryAndPage(query,categoryId,minPrice,maxPrice,status,pageable);
         return ResponseEntity.ok(productDTO);
     }
 

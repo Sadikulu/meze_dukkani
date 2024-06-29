@@ -59,7 +59,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<GPMResponse> updateCategory(@PathVariable Long id,
                                                       @Valid @RequestBody CategoryUpdateRequest categoryUpdateRequest){

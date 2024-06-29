@@ -34,7 +34,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAllCategoryList());
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<GPMResponse> saveCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
         CategoryDTO categoryDTO= categoryService.saveCategory(categoryRequest);

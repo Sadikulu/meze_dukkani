@@ -298,9 +298,9 @@ public class ProductService {
             predicates.add(root.get("category").get("id").in(categoryId));
         }
 
-        if (brandId != null && !brandId.isEmpty()) {
-            predicates.add(root.get("brand").get("id").in(brandId));
-        }
+//        if (brandId != null && !brandId.isEmpty()) {
+//            predicates.add(root.get("brand").get("id").in(brandId));
+//        }
 
         if (minPrice != null && maxPrice != null){
             double doubleMin = (double) minPrice;

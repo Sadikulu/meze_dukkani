@@ -25,7 +25,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<PageImpl<ProductDTO>> getProducts(@RequestParam(value = "q",required = false) String query,
                                                             @RequestParam(value = "categories",required = false) List<Long> categoryId,
                                                             //@RequestParam(value = "brands",required = false) List<Long> brandId,

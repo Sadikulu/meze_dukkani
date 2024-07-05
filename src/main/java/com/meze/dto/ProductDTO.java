@@ -26,7 +26,11 @@ public class ProductDTO {
 
     private String price;
 
+    private Double discountedPrice;
+
     private Double tax;
+
+    private Integer discount;
 
     private Integer stockAmount;
 

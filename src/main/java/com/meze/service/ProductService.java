@@ -326,11 +326,11 @@ public class ProductService {
             }else throw new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND_MESSAGE);
         }catch(ResourceNotFoundException e){
                 CategoryStatus cStatus = CategoryStatus.PUBLISHED;
-                BrandStatus bStatus = BrandStatus.PUBLISHED;
+                //BrandStatus bStatus = BrandStatus.PUBLISHED;
                 ProductStatus pStatus = ProductStatus.PUBLISHED;
             predicates.add(cb.and(
                     cb.equal(root.get("status"), pStatus),
-                    cb.equal(root.get("brand").get("status"), bStatus),
+                    //cb.equal(root.get("brand").get("status"), bStatus),
                     cb.equal(root.get("category").get("status"), cStatus)
             ));
         }

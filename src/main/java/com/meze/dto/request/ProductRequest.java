@@ -23,6 +23,9 @@ public class ProductRequest {
     private Double tax;
     @Min(0)
     @Max(100)
+    private Integer discount;
+    @Min(0)
+    @Max(100)
     private Integer stockAmount;
     @NotNull(message = "Please provide if the product is featured or not")
     private Boolean featured;

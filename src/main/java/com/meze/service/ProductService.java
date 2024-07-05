@@ -83,14 +83,14 @@ public class ProductService {
         product.setSku(uniqueIdGenerator.generateUniqueId(8));
         product.setSlug(URLEncoder.encode(productRequest.getTitle(), StandardCharsets.UTF_8));
         product.setStatus(ProductStatus.NOT_PUBLISHED);
-        //product.setDiscountedPrice(product.getPrice()*(100-product.getDiscount())/100);
+        //product.setDiscountedPrice(Double.parseDouble(product.getPrice())*(100-product.getDiscount())/100);
         //product.setBrand(brand);
 
         product.setPrice(productRequest.getPrice());
         product.setImage(imageFiles);
         //product.setStatus(productRequest.getStatus());
         product.setCategory(category);
-        //product.setDiscountedPrice(product.getPrice()*(100-product.getDiscount())/100);
+        product.setDiscountedPrice(Double.parseDouble(product.getPrice())*(100-product.getDiscount())/100);
         productRepository.save(product);
 
         return productMapper.productToProductDTO(product);
@@ -133,7 +133,7 @@ public class ProductService {
         product.setLongDesc( productUpdateRequest.getLongDesc() );
         product.setPrice( productUpdateRequest.getPrice() );
         product.setTax( productUpdateRequest.getTax() );
-//        product.setDiscount( productUpdateRequest.getDiscount() );
+        product.setDiscount( productUpdateRequest.getDiscount() );
         product.setStockAmount( productUpdateRequest.getStockAmount() );
 //        product.setStockAlarmLimit( productUpdateRequest.getStockAlarmLimit() );
         product.setSlug(URLEncoder.encode(productUpdateRequest.getTitle(), StandardCharsets.UTF_8));
@@ -147,7 +147,7 @@ public class ProductService {
         //product.setBrand(brand);
         product.setCategory(category);
         product.setImage(imageFiles);
-        //product.setDiscountedPrice(product.getPrice()*(100-product.getDiscount())/100);
+        product.setDiscountedPrice(Double.parseDouble(product.getPrice())*(100-product.getDiscount())/100);
         product.setPrice(productUpdateRequest.getPrice());
         productRepository.save(product);
 

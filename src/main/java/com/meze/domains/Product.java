@@ -41,7 +41,13 @@ public class Product {
     private String price;
 
     @Column
+    private Double discountedPrice;
+
+    @Column
     private Double tax;
+
+    @Column
+    private Integer discount;
 
     @Column
     private Integer stockAmount;

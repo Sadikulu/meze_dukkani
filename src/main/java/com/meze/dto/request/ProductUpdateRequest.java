@@ -33,6 +33,11 @@ public class ProductUpdateRequest {
     @NotNull(message = "Please enter discount percentage")
     @Min(0)
     @Max(100)
+    private Integer discount;
+
+    @NotNull(message = "Please enter discount percentage")
+    @Min(0)
+    @Max(100)
     private Integer stockAmount;
 
     @NotNull(message = "Please provide if the product is featured or not")

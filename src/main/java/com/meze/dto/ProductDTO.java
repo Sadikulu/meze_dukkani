@@ -24,7 +24,7 @@ public class ProductDTO {
 
     private String longDesc;
 
-    private String price;
+    private Double price;
 
     private Double discountedPrice;
 

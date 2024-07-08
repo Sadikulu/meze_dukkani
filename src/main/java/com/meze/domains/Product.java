@@ -38,7 +38,7 @@ public class Product {
     private String longDesc;
 
     @Column
-    private String price;
+    private Double price;
 
     @Column
     private Double discountedPrice;

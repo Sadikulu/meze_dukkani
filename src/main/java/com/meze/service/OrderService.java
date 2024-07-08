@@ -238,7 +238,6 @@ public class OrderService {
         List<ShoppingCartItem> shoppingCartItemList = shoppingCart.getShoppingCartItem();
         DecimalFormat df = new DecimalFormat("#.##");
         Order order = new Order();
-        //Payment payment = new Payment();
         Transaction transaction = new Transaction();
         User user = userService.getCurrentUser();
         List<Product> lowStockList = new ArrayList<>();
@@ -247,44 +246,11 @@ public class OrderService {
                 getAddressById(orderRequest.getShippingAddressId());
         UserAddress invoiceAddress = userAddressService.
                 getAddressById(orderRequest.getInvoiceAddressId());
-        //Coupons coupon = couponsService.getCouponByCouponCode(orderRequest.getCouponCode());
-        //OrderCoupon orderCoupon = null;
 
         if (shoppingCartItemList.isEmpty()) {
             throw new ResourceNotFoundException(ErrorMessage.UUID_NOT_FOUND_MESSAGE);
         }
-//        String[] shippingCompany = {"UPS","FedEx","Amazon Logistics","USPS","DHL Express","OnTrac","Purolator","LaserShip","Aramex","ShipBob"};
-//        String[] provider = {"PayPal","Stripe", "Square", "Authorize.net","Braintree", "Dwolla", "Amazon Pay", "Google Pay", "Apple Pay", "Visa Checkout"};
-//        List<Integer> digits = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            digits.add(i);
-//        }
-//        Collections.shuffle(digits);
-//        StringBuilder randomNumber = new StringBuilder();
-//        for (int i = 0; i < 16; i++) {
-//            randomNumber.append(digits.get((int) ((Math.random() * 10))));
-//        }
-//        if (!orderRequest.getCouponCode().isEmpty()){
-//            if (coupon.getStatus().equals(CouponsStatus.PASSIVE)){
-//                throw new BadRequestException(String.format(ErrorMessage.COUPON_NOT_VALID_MESSAGE,coupon.getCode()));
-//            }
-//            if (coupon.getLife()==0){
-//                throw new BadRequestException(String.format(ErrorMessage.COUPON_NOT_VALID_MESSAGE,coupon.getCode()));
-//            }
-//            if (coupon.getLife()!=-1){
-//                coupon.setLife(coupon.getLife()-1);
-//            }
-//            orderCoupon = new OrderCoupon();
-//            orderCoupon.setCoupons(coupon);
-//            orderCoupon.setUser(user);
-//            orderCoupon.setOrder(order);
-//            boolean isCouponUsedBefore = orderCouponRepository.existsByCouponsIdAndUserId(coupon.getId(),user.getId());
-//            if (isCouponUsedBefore){
-//                throw new BadRequestException(String.format(ErrorMessage.COUPON_ALREADY_USED_MESSAGE,coupon.getCode()));
-//            }
-//            couponsRepository.save(coupon);
-//            orderCouponRepository.save(orderCoupon);
-//        }
+
 
         double discount = 0.0;
         double tax = calculateTaxCost(shoppingCartItemList);
@@ -299,22 +265,12 @@ public class OrderService {
                 throw new BadRequestException(String.format(ErrorMessage.PRODUCT_OUT_OF_STOCK_MESSAGE,each.getProduct().getId()));
             }
             orderItem.setQuantity(each.getQuantity());
-            //orderItem.setDiscount(product.getDiscount());
             orderItem.setTax(product.getTax());
-            if (!Character.isLetter(product.getPrice().charAt(0))){
-                orderItem.setUnitPrice(Double.parseDouble(product.getPrice()));
-                orderItem.setSubTotal(Double.parseDouble(each.getProduct().getPrice())* each.getQuantity());
-            }
+                orderItem.setUnitPrice(product.getPrice());
+                orderItem.setSubTotal(each.getProduct().getPrice()* each.getQuantity());
             orderItemService.save(orderItem);
             order.getOrderItems().add(orderItem);
-
-            //discount+=((product.getPrice()-product.getDiscountedPrice()) * each.getQuantity());
-            if (!Character.isLetter(product.getPrice().charAt(0))){
-                subTotal+= Double.parseDouble(product.getPrice())*each.getQuantity();
-            }
-//            if (each.getProduct().getStockAlarmLimit()>= each.getProduct().getStockAmount() - each.getQuantity()){
-//                lowStockList.add(each.getProduct());
-//            }
+                subTotal+= product.getPrice()*each.getQuantity();
 
             Integer newStockAmount = product.getStockAmount() - each.getQuantity();
             product.setStockAmount(newStockAmount);
@@ -324,21 +280,12 @@ public class OrderService {
         double grandTotal = Double.parseDouble(df.format(grandTotalCalculator(subTotal,discount,tax)).replaceAll(",","."));
         double shippingCost = calculateShippingCost(grandTotal);
 
-//        if(orderCoupon!=null && orderCoupon.getCoupons().getType().equals(CouponsType.EXACT_AMOUNT))
-//            if (!(grandTotal >= orderCoupon.getCoupons().getAmount() * 10)) {
-//                throw new BadRequestException(String.format(ErrorMessage.COUPON_CAN_NOT_BE_USED_MESSAGE, Double.parseDouble(df.format(orderCoupon.getCoupons().getAmount() * 10).replaceAll(",","."))));
-//            }
-
 
         transaction.setTransaction(TransactionStatus.CREATED);
         user.getTransactions().add(transaction);
         user.getOrders().add(order);
-        //payment.setAmount(grandTotal+shippingCost);
-        //payment.setProvider(provider[(int)(Math.random()*shippingCompany.length)]);
-        //payment.setStatus(PaymentStatus.COMPLETED);
         transactionRepository.save(transaction);
         userService.save(user);
-        //paymentService.save(payment);
         order.setCode(uniqueIdGenerator.generateUniqueId(8));
         order.setContactName(orderRequest.getContactName());
         order.setContactPhone(orderRequest.getPhoneNumber());
@@ -351,12 +298,7 @@ public class OrderService {
         order.setDiscount(Double.parseDouble(df.format(discount).replaceAll(",",".")));
         order.setSubTotal(Double.parseDouble(df.format(subTotal).replaceAll(",",".")));
         order.setUser(user);
-        //order.setShippingDetails(shippingCompany[(int)(Math.random()*shippingCompany.length)] + " : "+ randomNumber);
         order.getTransaction().add(transaction);
-        //order.getPayments().add(payment);
-        //if (orderCoupon!=null){
-        //    order.getOrderCoupons().add(orderCoupon);
-        //}
         orderRepository.save(order);
 
         for (User each:managerList) {
@@ -370,37 +312,21 @@ public class OrderService {
                 emailService.buildOrderMail(order)
         );
 
-//        if(!lowStockList.isEmpty()){
-//            for (User managers:managerList) {
-//                emailSender.send(
-//                        managers.getEmail(),
-//                        emailService.buildStockLimitAlarmEmail(managers.getFirstName(),lowStockList)
-//                );
-//            }
-//        }
         shoppingCartService.cleanShoppingCart(cartUUID);
         return orderMapper.orderToOrderDTO(order);
     }
 
     private double grandTotalCalculator(double subTotal,double discount, double tax) {
-//            double beforeCouponPrice = (subTotal-discount)+tax;
-//            if (orderCoupon.getCoupons().getType().equals(CouponsType.EXACT_AMOUNT)) {
-//                grandTotal = beforeCouponPrice - orderCoupon.getCoupons().getAmount();
-//            }else{
-//                grandTotal= beforeCouponPrice*((100-orderCoupon.getCoupons().getAmount())/100);
-//            }
-//        }else{
-//            grandTotal = beforeCouponPrice;
-//        }
+
         return (subTotal-discount)+tax;
     }
 
     private double calculateTaxCost(List<ShoppingCartItem> shoppingCartItemList) {
         double taxCost = 0.0;
         for (ShoppingCartItem each:shoppingCartItemList) {
-            if (!Character.isLetter(each.getProduct().getPrice().charAt(0))){
-                taxCost+= (Double.parseDouble(each.getProduct().getPrice())* each.getQuantity()*(each.getProduct().getTax()))/100;
-            }
+
+                taxCost+= (each.getProduct().getPrice()* each.getQuantity()*(each.getProduct().getTax()))/100;
+
         }
         return taxCost;
     }
@@ -499,17 +425,15 @@ public class OrderService {
                             }
                             each.setQuantity(product.getQuantity());
                             //each.setDiscount(each.getProduct().getDiscount());
-                            if (!Character.isLetter(each.getProduct().getPrice().charAt(0))){
-                                each.setUnitPrice(Double.parseDouble(each.getProduct().getPrice()));
-                            }
+                                each.setUnitPrice(each.getProduct().getPrice());
                             each.setTax(each.getProduct().getTax());
                             each.setSubTotal(tempSubTotal+(quantityDifference*each.getUnitPrice()));
                             each.setUpdateAt(LocalDateTime.now());
                             newOrderListSubTotal +=(tempSubTotal+(quantityDifference*each.getUnitPrice()));
-                            if (!Character.isLetter(each.getProduct().getPrice().charAt(0))){
-                                newDiscountedPrice +=(oldDiscountedPrice+((Double.parseDouble(each.getProduct().getPrice())) * quantityDifference));
-                                newTaxPrice += ((Double.parseDouble(each.getProduct().getPrice())* quantityDifference *(each.getProduct().getTax()))/100);
-                            }
+
+                                newDiscountedPrice +=(oldDiscountedPrice+((each.getProduct().getPrice()) * quantityDifference));
+                                newTaxPrice += ((each.getProduct().getPrice()* quantityDifference *(each.getProduct().getTax()))/100);
+
                             updatedOrderItems.add(each);
                             each.getProduct().setStockAmount(each.getProduct().getStockAmount()-(quantityDifference));
                             deleted = false;

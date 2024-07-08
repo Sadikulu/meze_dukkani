@@ -1,7 +1,7 @@
 package com.meze.service;
 
 import com.meze.domains.*;
-import com.meze.domains.enums.BrandStatus;
+//import com.meze.domains.enums.BrandStatus;
 import com.meze.domains.enums.CategoryStatus;
 import com.meze.domains.enums.ProductStatus;
 import com.meze.domains.enums.RoleType;
@@ -14,7 +14,7 @@ import com.meze.exception.ConflictException;
 import com.meze.exception.ResourceNotFoundException;
 import com.meze.exception.message.ErrorMessage;
 import com.meze.mapper.ProductMapper;
-import com.meze.repository.ImageFileRepository;
+//import com.meze.repository.ImageFileRepository;
 import com.meze.repository.ProductRepository;
 import com.meze.repository.UserRepository;
 import com.meze.reusableMethods.UniqueIdGenerator;
@@ -43,8 +43,8 @@ public class ProductService {
     private final UniqueIdGenerator uniqueIdGenerator;
     private final UserService userService;
     private final RoleService roleService;
-    private final ImageFileRepository imageFileRepository;
-    //private final BrandRepository brandRepository;
+//    private final ImageFileRepository imageFileRepository;
+//    private final BrandRepository brandRepository;
     private final EntityManager entityManager;
     private final UserRepository userRepository;
 
@@ -90,7 +90,7 @@ public class ProductService {
         product.setImage(imageFiles);
         //product.setStatus(productRequest.getStatus());
         product.setCategory(category);
-        product.setDiscountedPrice(Double.parseDouble(product.getPrice())*(100-product.getDiscount())/100);
+        product.setDiscountedPrice(product.getPrice()*(100-product.getDiscount())/100);
         productRepository.save(product);
 
         return productMapper.productToProductDTO(product);
@@ -129,7 +129,7 @@ public class ProductService {
 
 //      product = productMapper.productUpdateRequestToProduct(productUpdateRequest);
         product.setTitle( productUpdateRequest.getTitle() );
-        product.setShortDesc( productUpdateRequest.getShortDesc() );
+        //product.setShortDesc( productUpdateRequest.getShortDesc() );
         product.setLongDesc( productUpdateRequest.getLongDesc() );
         product.setPrice( productUpdateRequest.getPrice() );
         product.setTax( productUpdateRequest.getTax() );
@@ -147,7 +147,7 @@ public class ProductService {
         //product.setBrand(brand);
         product.setCategory(category);
         product.setImage(imageFiles);
-        product.setDiscountedPrice(Double.parseDouble(product.getPrice())*(100-product.getDiscount())/100);
+        product.setDiscountedPrice(product.getPrice()*(100-product.getDiscount())/100);
         product.setPrice(productUpdateRequest.getPrice());
         productRepository.save(product);
 
@@ -185,7 +185,7 @@ public class ProductService {
             }else throw new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE);
         } catch (ResourceNotFoundException e) {
             CategoryStatus cStatus = CategoryStatus.PUBLISHED;
-            BrandStatus bStatus = BrandStatus.PUBLISHED;
+            //BrandStatus bStatus = BrandStatus.PUBLISHED;
             ProductStatus pStatus = ProductStatus.PUBLISHED;
             mostPopularProductInfoList = productRepository.findMostPopularProductsOfLastMonth(startDate, cStatus, pStatus, pageable);
         }
@@ -219,7 +219,7 @@ public class ProductService {
             }else throw new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE);
         } catch (ResourceNotFoundException e) {
             CategoryStatus cStatus = CategoryStatus.PUBLISHED;
-            BrandStatus bStatus = BrandStatus.PUBLISHED;
+            //BrandStatus bStatus = BrandStatus.PUBLISHED;
             ProductStatus pStatus = ProductStatus.PUBLISHED;
             featuredProductList = productRepository.findFeaturedProducts(cStatus,pStatus,pageable);
         }
@@ -237,7 +237,7 @@ public class ProductService {
             }else throw new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE);
         } catch (ResourceNotFoundException e) {
             CategoryStatus cStatus = CategoryStatus.PUBLISHED;
-            BrandStatus bStatus = BrandStatus.PUBLISHED;
+            //BrandStatus bStatus = BrandStatus.PUBLISHED;
             ProductStatus pStatus = ProductStatus.PUBLISHED;
             newProductList = productRepository.findNewProducts(cStatus,pStatus,pageable);
         }
@@ -290,8 +290,9 @@ public class ProductService {
         if (query != null && !query.isEmpty()) {
             String likeSearchText = "%" + query.toLowerCase(Locale.US) + "%";
             Predicate searchByTitle = cb.like(cb.lower(root.get("title")), likeSearchText);
-            Predicate searchByShortDesc = cb.like(cb.lower(root.get("shortDesc")), likeSearchText);
-            predicates.add(cb.or(searchByTitle, searchByShortDesc));
+            //Predicate searchByShortDesc = cb.like(cb.lower(root.get("shortDesc")), likeSearchText);
+            predicates.add(cb.or(searchByTitle//, searchByShortDesc
+            ));
         }
 
         if (categoryId != null && !categoryId.isEmpty()) {

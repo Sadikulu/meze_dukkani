@@ -61,14 +61,12 @@ public class ShoppingCartService {
             }
             int quantity = foundItem.getQuantity() + shoppingCartRequest.getQuantity();
             foundItem.setQuantity(quantity);
-            if (!Character.isLetter(product.getPrice().charAt(0))){
-                totalPrice = quantity*Double.parseDouble(product.getPrice());
+                totalPrice = quantity*product.getPrice();
                 foundItem.setTotalPrice(totalPrice);
-            }
             shoppingCartItemRepository.save(foundItem);
-            if (!Character.isLetter(product.getPrice().charAt(0))){
-                shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()+(shoppingCartRequest.getQuantity()*Double.parseDouble(foundItem.getProduct().getPrice())));
-            }
+
+                shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()+(shoppingCartRequest.getQuantity()*foundItem.getProduct().getPrice()));
+
             shoppingCartItem = foundItem;
             shoppingCartItem.setUpdateAt(LocalDateTime.now());
         } else{
@@ -76,10 +74,10 @@ public class ShoppingCartService {
             shoppingCartItem.setProduct(product);
             shoppingCartItem.setQuantity(shoppingCartRequest.getQuantity());
             shoppingCartItem.setShoppingCart(shoppingCart);
-            if (!Character.isLetter(product.getPrice().charAt(0))){
-                totalPrice = shoppingCartRequest.getQuantity()*Double.parseDouble(product.getPrice());
+
+                totalPrice = shoppingCartRequest.getQuantity()*product.getPrice();
                 shoppingCartItem.setTotalPrice(totalPrice);
-            }
+
             shoppingCartItemRepository.save(shoppingCartItem);
             shoppingCart.getShoppingCartItem().add(shoppingCartItem);
             shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()+totalPrice);
@@ -111,20 +109,19 @@ public class ShoppingCartService {
                 new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE));
         Product product = productService.findProductById(shoppingCartUpdateRequest.getProductId());
         ShoppingCartItem foundItem = shoppingCartItemRepository.findByProductIdAndShoppingCartCartUUID(product.getId(),shoppingCart.getCartUUID());
-        if (!Character.isLetter(foundItem.getProduct().getPrice().charAt(0))){
             switch (op){
                 case "increase":
                     foundItem.setQuantity(foundItem.getQuantity()+1);
-                    shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()+Double.parseDouble(foundItem.getProduct().getPrice()));
+                    shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()+foundItem.getProduct().getPrice());
                     break;
                 case "decrease":
                     foundItem.setQuantity(foundItem.getQuantity()-1);
-                    shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()-Double.parseDouble(foundItem.getProduct().getPrice()));
+                    shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()-foundItem.getProduct().getPrice());
                     break;
             }
-            Double totalPrice = discountCalculator.totalPriceWithDiscountCalculate(foundItem.getQuantity(), Double.parseDouble(product.getPrice()));
+            Double totalPrice = discountCalculator.totalPriceWithDiscountCalculate(foundItem.getQuantity(), product.getPrice());
             foundItem.setTotalPrice(totalPrice);
-        }
+
         foundItem.setUpdateAt(LocalDateTime.now());
         shoppingCartItemRepository.save(foundItem);
         save(shoppingCart);

@@ -19,7 +19,7 @@ public class ProductRequest {
     @NotBlank
     @Size(max = 3500, message = "The long description you have entered '${validatedValue}' must be {max} character long" )
     private String longDesc;
-    private String price;
+    private Double price;
     private Double tax;
     @Min(0)
     @Max(100)

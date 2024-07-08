@@ -26,7 +26,7 @@ public class ProductUpdateRequest {
     @Size(max = 3500, message = "The long description you have entered '${validatedValue}' must be {max} character long" )
     private String longDesc;
 
-    private String price;
+    private Double price;
 
     private Double tax;
 

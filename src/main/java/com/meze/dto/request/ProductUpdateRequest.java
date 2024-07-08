@@ -16,7 +16,7 @@ import java.util.Set;
 public class ProductUpdateRequest {
 
     @NotBlank(message = "You must provide a title")
-    @Size(min = 5, max = 150, message = "The Title you have entered '${validatedValue}' must be between {min} and {max} character long")
+    @Size(min = 3, max = 150, message = "The Title you have entered '${validatedValue}' must be between {min} and {max} character long")
     private String title;
 
 //    @NotBlank

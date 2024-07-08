@@ -37,7 +37,7 @@ public class EmailService implements EmailSender{
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,"UTF-8");
             helper.setText(email,true);
             helper.setTo(to);
-            helper.setSubject("Welcome to the Gaming Pro Market");
+            helper.setSubject("Meze Dükkanına Hoşgeldiniz");
             helper.setFrom(mailAddress);
             mailSender.send(mimeMessage);
         }catch (MessagingException e){
@@ -488,7 +488,8 @@ public class EmailService implements EmailSender{
                 "  </head>\n" +
                 "  <body>\n" +
                 "    <span class=\"preheader\"\n" +
-                "      >We're thrilled to have you here! Get ready to dive into your new account.</span\n" +
+                "      >Yeni hesabınıza hoş geldiniz! Burada olduğunuz için çok heyecanlıyız! " +
+                "        Yeni hesabınızla keşfetmeye başlayın.</span\n" +
                 "    >\n" +
                 "    <table\n" +
                 "      class=\"email-wrapper\"\n" +
@@ -508,9 +509,9 @@ public class EmailService implements EmailSender{
                 "          >\n" +
                 "            <tr>\n" +
                 "              <td class=\"email-masthead\">\n" +
-                "                <a href=\"https://gamingpromarket.com\"\n" +
+                "                <a href=\"https://mezedukkani.net\"\n" +
                 "                  ><img\n" +
-                "                    src=\"https://gamingpromarket.com/img/logo.png\"\n" +
+                "                    src=\"https://mezedukkani.net/img/logo.png\"\n" +
                 "                    alt=\"\"\n" +
                 "                    style=\"height: 10vh;\"\n" +
                 "                    \n" +
@@ -537,10 +538,10 @@ public class EmailService implements EmailSender{
                 "                  <tr>\n" +
                 "                    <td class=\"content-cell\">\n" +
                 "                      <div class=\"f-fallback\">\n" +
-                "                        <h1>Welcome "+name+"!</h1>\n" +
+                "                        <h1>Hoşgeldiniz sayın "+name+"!</h1>\n" +
                 "                        <p>\n" +
-                "                          We're excited to have you get started. First, you need to\n" +
-                "                  confirm your account. Just press the button below.\n" +
+                "                          Başlamanız için sabırsızlanıyoruz. İlk olarak, hesabınızı doğrulamanız gerekiyor. " +
+                "                                 Aşağıdaki butona tıklamanız yeterli.\n" +
                 "                        </p>\n" +
                 "                        <!-- Action -->\n" +
                 "                        <table\n" +
@@ -578,8 +579,9 @@ public class EmailService implements EmailSender{
                 "                          </tr>\n" +
                 "                        </table>\n" +
                 "                        <p style=\"margin: 0\">\n" +
-                "                          If that doesn't work, copy and paste the following link in\n" +
-                "                          your browser:\n" +
+                "                          \n" +
+                "                        Eğer bu işe yaramazsa, aşağıdaki bağlantıyı kopyalayıp " +
+                "                             tarayıcınıza yapıştırmanız yeterli:\n" +
                 "                        </p>\n" +
                 "                            <p style=\"margin: 0\">\n" +
                 "                              <a href=\"#\" target=\"_blank\" style=\"color: #e63946\"\n" +
@@ -591,8 +593,8 @@ public class EmailService implements EmailSender{
                 "                          <tr>\n" +
                 "                            <td>\n" +
                 "                              <p style=\"margin: 0\">\n" +
-                "                                If you have any questions, just reply to this\n" +
-                "                                email&mdash;we're always happy to help out.\n" +
+                "                                Eğer herhangi bir sorunuz olursa, bu e-postaya yanıt vermeniz yeterlidir. " +
+                "                                 Size her zaman yardımcı olmaktan mutluluk duyarız.\n" +
                 "                              </p>\n" +
                 "                            </td>\n" +
                 "                          </tr>\n" +
@@ -1073,8 +1075,8 @@ public class EmailService implements EmailSender{
             "  </head>\n" +
             "  <body>\n" +
             "    <span class=\"preheader\"\n" +
-            "      >Use this link to reset your password. The link is only valid for 24\n" +
-            "      hours.</span\n" +
+            "      >\n" +
+            "   Şifrenizi sıfırlamak için bu bağlantıyı kullanın. Bağlantı yalnızca 24 saat geçerlidir.</span\n" +
             "    >\n" +
             "    <table\n" +
             "      class=\"email-wrapper\"\n" +
@@ -1094,7 +1096,7 @@ public class EmailService implements EmailSender{
             "          >\n" +
             "            <tr>\n" +
             "              <td class=\"email-masthead\">\n" +
-            "                <img src=\"https://gamingpromarket.com/img/logo.png\" alt=\"\" style=\"height: 10vh;\">\n" +
+            "                <img src=\"https://mezedukkani.net/img/logo.png\" alt=\"\" style=\"height: 10vh;\">\n" +
             "              </td>\n" +
             "            </tr>\n" +
             "            <!-- Email Body -->\n" +
@@ -1119,12 +1121,11 @@ public class EmailService implements EmailSender{
             "                      <div class=\"f-fallback\">\n" +
             "                        <h1>Hi "+ name +",</h1>\n" +
             "                        <p>\n" +
-            "                          You recently requested to reset your password for your\n" +
-            "                          Gaming Pro Market account. Use the button below to reset\n" +
+            "                          Kısa süre önce Meze Dükkanı hesabınız için şifre sıfırlama talebinde bulundunuz. " +
+            "                             Şifrenizi sıfırlamak için aşağıdaki butonu kullanın.\n" +
             "                          it.\n" +
             "                          <strong\n" +
-            "                            >This password reset is only valid for the next 24\n" +
-            "                            hours.</strong\n" +
+            "                            >Bu şifre sıfırlama işlemi yalnızca önümüzdeki 24 saat için geçerlidir.</strong\n" +
             "                          >\n" +
             "                        </p>\n" +
             "                        <!-- Action -->\n" +
@@ -1163,12 +1164,11 @@ public class EmailService implements EmailSender{
             "                          </tr>\n" +
             "                        </table>\n" +
             "                        <p>\n" +
-            "                          For security, this request was received from a\n" +
+            "                         Güvenlik için, bu talep şu konumdan alındı: a\n" +
             "                          <a href=\"#\">"+ forgotPasswordRequest.getOperatingSystem() +"</a> device using\n" +
-            "                          <a href=\"#\">"+ forgotPasswordRequest.getBrowser() +"</a>. If you did not request a\n" +
-            "                          password reset, please ignore this email or\n" +
-            "                          <a href=\"mailto:mezedukkan915@gmail.com\">contact support</a> if you\n" +
-            "                          have questions.\n" +
+            "                          <a href=\"#\">"+ forgotPasswordRequest.getBrowser() +"</a>. Eğer  a\n" +
+            "                       şifre sıfırlama talebinde bulunmadıysanız, lütfen bu e-postayı dikkate almayın. Veya \n" +
+            "                          <a href=\"mailto:mezedukkan915@gmail.com\"> sorularınız varsa destek birimi ile iletişime geçiniz\n</a>" +
             "                        </p>\n" +
             "                        <p>Thanks, <br />The Gaming Pro Market Team</p>\n" +
             "                        <!-- Sub copy -->\n" +
@@ -1176,9 +1176,8 @@ public class EmailService implements EmailSender{
             "                          <tr>\n" +
             "                            <td>\n" +
             "                              <p class=\"f-fallback sub\">\n" +
-            "                                If you’re having trouble with the button above,\n" +
-            "                                copy and paste the URL below into your web\n" +
-            "                                browser.\n" +
+            "                                Yukarıdaki bağlantı ile ilgili sorun yaşıyorsanız, " +
+            "                               aşağıdaki URL'yi web tarayıcınıza kopyalayıp yapıştırınız.\n" +
             "                              </p>\n" +
             "                              <p class=\"f-fallback sub\">" + link + "</p>\n" +
             "                            </td>\n" +
@@ -1267,9 +1266,9 @@ public class EmailService implements EmailSender{
                 "    <div style=\"display: flex;\">\n" +
                 "    <div style=\"margin-left: auto; margin-right: auto;\">\n" +
                 "      <div style=\"text-align: center\">\n" +
-                "        <a href=\"https://www.gamingpromarket.com\" target=\"_blank\">\n" +
+                "        <a href=\"https://www.mezedukkani.net\" target=\"_blank\">\n" +
                 "          <img\n" +
-                "            src=\"https://gamingpromarket.com/img/logo.png\"\n" +
+                "            src=\"https://mezedukkani.net/img/logo.png\"\n" +
                 "            alt=\"\"\n" +
                 "            width=\"200vw\"\n" +
                 "          />\n" +
@@ -1346,9 +1345,9 @@ public class EmailService implements EmailSender{
                 "          <div>\n" +
                 "            <p style=\"text-align: center\">\n" +
                 "             <div style=\"text-align: center\">\n" +
-                "                <a href=\"https://www.gamingpromarket.com\" target=\"_blank\">\n" +
+                "                <a href=\"https://www.mezedukkani.net\" target=\"_blank\">\n" +
                 "                  <img\n" +
-                "                src=\"https://gamingpromarket.com/img/logo.png\"\n" +
+                "                src=\"https://mezedukkani.net/img/logo.png\"\n" +
                 "                alt=\"\"\n" +
                 "                style=\"width: 200px; max-width: 100%; height: auto;\"\n" +
                 "              />\n" +
@@ -1364,10 +1363,10 @@ public class EmailService implements EmailSender{
                 "                text-align: center;\n" +
                 "              \"\n" +
                 "            >\n" +
-                "              Your order has been placed successfully!\n" +
+                "              Siparişiniz başarıyla alındı!\n" +
                 "            </p>\n" +
                 "            <p style=\"font-size: 1.125rem; text-align: center\">\n" +
-                "              <b>Order Number:</b>"+order.getCode() +"\n" +
+                "              <b>Sipariş Numarası:</b>"+order.getCode() +"\n" +
                 "            </p>\n" +
                 "          </div>\n" +
                 "          <div>\n" +
@@ -1383,32 +1382,32 @@ public class EmailService implements EmailSender{
                 "                <td>"+order.getCreateAt().format(DateTimeFormatter.ofPattern("HH:mm:ss"))+"</td>\n" +
                 "              </tr>\n" +
                 "              <tr>\n" +
-                "                <td><b>Shipping Address </b></td>\n" +
+                "                <td><b>Kargo Adresi </b></td>\n" +
                 "                <td>:</td>\n" +
                 "                <td>"+order.getShippingAddress().getAddress()+"</td>\n" +
                 "              </tr>\n" +
                 "              <tr>\n" +
-                "                <td><b>Invoice Address </b></td>\n" +
+                "                <td><b>Fatura Adresi </b></td>\n" +
                 "                <td>:</td>\n" +
                 "                <td>"+order.getInvoiceAddress().getAddress()+"</td>\n" +
                 "              </tr>\n" +
                 "              <tr>\n" +
-                "                <td><b>Contact Name </b></td>\n" +
+                "                <td><b>İsim </b></td>\n" +
                 "                <td>:</td>\n" +
                 "                <td>"+order.getContactName()+"</td>\n" +
                 "              </tr>\n" +
                 "              <tr>\n" +
-                "                <td><b>Contact Phone Number </b></td>\n" +
+                "                <td><b>Telefon Numarası </b></td>\n" +
                 "                <td>:</td>\n" +
                 "                <td>"+order.getContactPhone()+"</td>\n" +
                 "              </tr>\n" +
                 "              <tr>\n" +
-                "                <td><b>Cargo Company </b></td>\n" +
+                "                <td><b>Kargo Şirketi </b></td>\n" +
                 "                <td>:</td>\n" +
                 "                <td>"+shippingDetailList.get(0)+"</td>\n" +
                 "              </tr>\n" +
                 "              <tr>\n" +
-                "                <td><b>Shipping Tracking Number </b></td>\n" +
+                "                <td><b>Kargo takip Numarası </b></td>\n" +
                 "                <td>:</td>\n" +
                 "                <td>"+shippingDetailList.get(shippingDetailList.size()-1)+"</td>\n" +
                 "              </tr>\n" +
@@ -1419,44 +1418,44 @@ public class EmailService implements EmailSender{
                 "              <thead style=\"background-color: rgb(29, 53, 87); color: white;\">\n" +
                 "                <tr>\n" +
                 "                  <th style=\"width: 10vh;\"></th>\n" +
-                "                  <th style=\"text-align: left; width: 60vh; text-align: center\">Product</th>\n" +
-                "                  <th style=\"text-align: center;  width: 15vh;\">Amount</th>\n" +
+                "                  <th style=\"text-align: left; width: 60vh; text-align: center\">Ürün</th>\n" +
+                "                  <th style=\"text-align: center;  width: 15vh;\">Adet</th>\n" +
                 "                  <th style=\"white-space: nowrap; text-align: right; width: 15vh; text-align: center\">\n" +
-                "                    Sub Total\n" +
+                "                    Toplam\n" +
                 "                  </th>\n" +
                 "                </tr>\n" +
                 "              </thead>\n" +
                 "              <tbody>" + orderItemToTable(order) +"</tbody>\n" +
                 "              <tfoot>\n" +
                 "                <tr>\n" +
-                "                  <td colspan=\"3\" style=\"text-align: right\">Sub Total :</td>\n" +
-                "                  <td style=\"text-align: right\"><b>"+order.getSubTotal()+"$</b></td>\n" +
+                "                  <td colspan=\"3\" style=\"text-align: right\">Toplam :</td>\n" +
+                "                  <td style=\"text-align: right\"><b>"+order.getSubTotal()+ "TL</b></td>\n" +
                 "                </tr>\n" +
                 "                <tr>\n" +
-                "                  <td colspan=\"3\" style=\"text-align: right\">Discount :</td>\n" +
-                "                  <td style=\"text-align: right\"><b>"+order.getDiscount()+"$</b></td>\n" +
+                "                  <td colspan=\"3\" style=\"text-align: right\">İndirim :</td>\n" +
+                "                  <td style=\"text-align: right\"><b>"+order.getDiscount()+ "TL</b></td>\n" +
                 "                </tr>\n" +
                 "                <tr>\n" +
-                "                  <td colspan=\"3\" style=\"text-align: right\">Tax :</td>\n" +
-                "                  <td style=\"text-align: right\"><b>"+order.getTax()+"$</b></td>\n" +
+                "                  <td colspan=\"3\" style=\"text-align: right\">KDV :</td>\n" +
+                "                  <td style=\"text-align: right\"><b>"+order.getTax()+ "TL</b></td>\n" +
                 "                </tr>\n" +
                 "                <tr>\n" +
                 "                  <td colspan=\"3\" style=\"text-align: right\">\n" +
-                "                    <b>Total Amount :</b>\n" +
+                "                    <b>Toplam Fiyat :</b>\n" +
                 "                  </td>\n" +
-                "                  <td style=\"text-align: right\"><b>"+order.getGrandTotal()+"$</b></td>\n" +
+                "                  <td style=\"text-align: right\"><b>"+order.getGrandTotal()+ " TL</b></td>\n" +
                 "                </tr>\n" +
                 "              </tfoot>\n" +
                 "            </table>\n" +
                 "          </div>\n" +
                 "          <p style=\"font-size: 1.125rem; text-align: center\">\n" +
-                "            Thank you for shopping with us!\n" +
+                "            Bizden alış veriş yaptığınız için teşekkür ederiz!\n" +
                 "          </p>\n" +
                 "           <table style=\"text-align: center; margin-left: auto; margin-right: auto\">\n" +
                 "            <tr>\n" +
                 "              <td>\n" +
                 "                <p>\n" +
-                "                  [Gaming Pro Market, LLC]\n" +
+                "                  [Meze Dükkanı, LLC]\n" +
                 "                  <br />\n" +
                 "                  NY 10016, USA\n" +
                 "                  <br />\n" +
@@ -1487,28 +1486,28 @@ public class EmailService implements EmailSender{
                 "    <div style=\"display: flex;\">\n" +
                 "      <div style=\"margin-left: auto; margin-right: auto;\">\n" +
                 "        <div style=\"text-align: center;\">\n" +
-                "          <h3>Dear "+name+"</h3>\n" +
+                "          <h3>Sayın "+name+"</h3>\n" +
                 "        </div>\n" +
                 "        <div style=\"width: 30vw; min-width: 350px; max-width: 450px\">\n" +
                 "          <div style=\"background: linear-gradient(30deg, rgb(51, 146, 181), rgb(29, 53, 87)); border-top-left-radius: 15px; border-top-right-radius: 15px; text-align: center; margin: 0;\">\n" +
-                "            <a href=\"https://gamingpromarket.com\">\n" +
+                "            <a href=\"https://mezedukkani.net\">\n" +
                 "              <img\n" +
-                "                src=\"https://gamingpromarket.com/img/logo.png\"\n" +
-                "                alt=\"gamingpromarketLogo\"\n" +
+                "                src=\"https://mezedukkani.net/img/logo.png\"\n" +
+                "                alt=\"\"\n" +
                 "                style=\"max-width: 70%; padding: 1rem;\"\n" +
                 "              />\n" +
                 "            </a>\n" +
                 "          </div>\n" +
                 "          <div style=\"background-color: rgb(237, 237, 237); text-align: center; margin: 0;\">\n" +
                 "            <div>\n" +
-                "              <h3 style=\"margin: 0; padding-top: .5rem;\"><b>" +discount+ " OFF YOUR PURCHASE</b></h3>\n" +
+                "              <h3 style=\"margin: 0; padding-top: .5rem;\"><b>" +discount+ " Satın alma işleminizden kazandığınız indirim</b></h3>\n" +
                 "            </div>\n" +
                 "            <div>\n" +
                 "              <p style=\"margin: 0; padding-top: .5rem; padding-bottom: .5rem;\">" +message+ "</p>\n" +
                 "            </div>\n" +
                 "          </div>\n" +
                 "          <div style=\"background: linear-gradient(175deg, rgb(51, 146, 181), rgb(29, 53, 87)); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; text-align: center;\">\n" +
-                "            <p style=\"margin: 0; padding-top: .7rem; padding-bottom: .7rem; font-size:1.15rem;\">Use Promo Code: <span style=\"background-color: rgb(237, 237, 237); border-radius: 4px; padding:0.2rem 0.4rem;\">" + coupon.getCode()+ "</span></p>\n" +
+                "            <p style=\"margin: 0; padding-top: .7rem; padding-bottom: .7rem; font-size:1.15rem;\"> Promosyon kodunu kullanın : <span style=\"background-color: rgb(237, 237, 237); border-radius: 4px; padding:0.2rem 0.4rem;\">" + coupon.getCode()+ "</span></p>\n" +
                 "          </div>\n" +
                 "        </div>\n" +
                 "        <div style=\"margin-top: 2rem\">\n" +
@@ -1516,7 +1515,7 @@ public class EmailService implements EmailSender{
                 "            <tr>\n" +
                 "              <td>\n" +
                 "                <p>\n" +
-                "                  [Gaming Pro Market, LLC]\n" +
+                "                  [Meze Dükkanı, LLC]\n" +
                 "                  <br />\n" +
                 "                  NY 10016, USA\n" +
                 "                  <br />\n" +
@@ -1539,7 +1538,7 @@ public class EmailService implements EmailSender{
           orderItems.append("<tr>")
                   .append("<td style=\"text-align: center;\">\n" +
                           "                    <img\n" +
-                          "                      src=\"https://ecommerce-backend-v2.herokuapp.com/image/display/"+showcaseImage+"\"\n" +
+                          "                      src=\"https://meze-dukkani.onrender.com/image/display/"+showcaseImage+"\"\n" +
                           "                      alt=\"3\"\n" +
                           "                      width=\"50vh\"\n" +
                           "                    />\n" +
@@ -1559,7 +1558,7 @@ public class EmailService implements EmailSender{
             products.append("<tr>")
                     .append("<td style=\"text-align: center\">\n" +
                     "                  <img\n" +
-                    "                    src=\"https://ecommerce-backend-v2.herokuapp.com/image/display/"+showcaseImage+"\"\n" +
+                    "                    src=\"https://meze-dukkani.onrender.com/image/display/"+showcaseImage+"\"\n" +
                     "                    alt=\"3\"\n" +
                     "                    width=\"50vh\"\n" +
                     "                  />\n" +

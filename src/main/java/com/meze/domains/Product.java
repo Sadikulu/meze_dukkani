@@ -31,8 +31,8 @@ public class Product {
     @Column(length = 150, nullable = false)
     private String title;
 
-//    @Column(length = 500)
-//    private String shortDesc;
+    @Column(length = 500)
+    private String shortDesc;
 
     @Column(length = 3500)
     private String longDesc;

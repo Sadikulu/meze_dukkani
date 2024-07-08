@@ -20,7 +20,7 @@ public class ProductDTO {
 
     private String title;
 
-    private String shortDesc;
+//    private String shortDesc;
 
     private String longDesc;
 

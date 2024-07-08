@@ -19,9 +19,9 @@ public class ProductUpdateRequest {
     @Size(min = 5, max = 150, message = "The Title you have entered '${validatedValue}' must be between {min} and {max} character long")
     private String title;
 
-    @NotBlank
-    @Size(max = 500, message = "The short description you have entered '${validatedValue}' must be {max} character long")
-    private String shortDesc;
+//    @NotBlank
+//    @Size(max = 500, message = "The short description you have entered '${validatedValue}' must be {max} character long")
+//    private String shortDesc;
     @NotBlank
     @Size(max = 3500, message = "The long description you have entered '${validatedValue}' must be {max} character long" )
     private String longDesc;

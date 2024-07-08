@@ -66,7 +66,7 @@ public class Product {
     private ProductStatus status;
 
     @Column
-    private Boolean builtIn = false;
+    private Boolean builtIn = true;
 
     @Column
     private LocalDateTime createAt = LocalDateTime.now();

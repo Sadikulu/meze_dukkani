@@ -41,7 +41,7 @@ public interface ShoppingCartItemMapper {
     }
 
     @Named("getProductPrice")
-    public static String getProductPrice(Product product){
+    public static Double getProductPrice(Product product){
         return product.getPrice();
     }
 

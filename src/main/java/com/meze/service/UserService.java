@@ -90,7 +90,7 @@ public class UserService {
     }
 
     public String saveUser(RegisterRequest registerRequest) {
-        Role role = roleService.findByRoleName(RoleType.ROLE_ADMIN);
+        Role role = roleService.findByRoleName(RoleType.ROLE_CUSTOMER);
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         User user = null;

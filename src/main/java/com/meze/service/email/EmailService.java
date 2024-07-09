@@ -581,7 +581,7 @@ public class EmailService implements EmailSender{
                 "                        <p style=\"margin: 0\">\n" +
                 "                          \n" +
                 "                        Eğer bu işe yaramazsa, aşağıdaki bağlantıyı kopyalayıp " +
-                "                             tarayıcınıza yapıştırmanız yeterli:\n" +
+                "                             tarayıcınıza yapıştırınız:\n" +
                 "                        </p>\n" +
                 "                            <p style=\"margin: 0\">\n" +
                 "                              <a href=\"#\" target=\"_blank\" style=\"color: #e63946\"\n" +
@@ -593,7 +593,7 @@ public class EmailService implements EmailSender{
                 "                          <tr>\n" +
                 "                            <td>\n" +
                 "                              <p style=\"margin: 0\">\n" +
-                "                                Eğer herhangi bir sorunuz olursa, bu e-postaya yanıt vermeniz yeterlidir. " +
+                "                                Eğer herhangi bir sorunuz olursa, bu e-postaya yanıt verebilirsiniz. " +
                 "                                 Size her zaman yardımcı olmaktan mutluluk duyarız.\n" +
                 "                              </p>\n" +
                 "                            </td>\n" +
@@ -605,30 +605,6 @@ public class EmailService implements EmailSender{
                 "                </table>\n" +
                 "              </td>\n" +
                 "            </tr>\n" +
-                "            <tr>\n" +
-                "              <td>\n" +
-                "                <table\n" +
-                "                  class=\"email-footer\"\n" +
-                "                  align=\"center\"\n" +
-                "                  width=\"570\"\n" +
-                "                  cellpadding=\"0\"\n" +
-                "                  cellspacing=\"0\"\n" +
-                "                  role=\"presentation\"\n" +
-                "                >\n" +
-                "                  <tr>\n" +
-                "                    <td class=\"content-cell\" align=\"center\">\n" +
-                "                      <p class=\"f-fallback sub align-center\">\n" +
-                "                        [Company Name, LLC]\n" +
-                "                        <br />NY 10016, USA<br />431 5th Ave, New York\n" +
-                "                      </p>\n" +
-                "                    </td>\n" +
-                "                  </tr>\n" +
-                "                </table>\n" +
-                "              </td>\n" +
-                "            </tr>\n" +
-                "          </table>\n" +
-                "        </td>\n" +
-                "      </tr>\n" +
                 "    </table>\n" +
                 "  </body>\n" +
                 "</html>\n";
@@ -1189,30 +1165,6 @@ public class EmailService implements EmailSender{
             "                </table>\n" +
             "              </td>\n" +
             "            </tr>\n" +
-            "            <tr>\n" +
-            "              <td>\n" +
-            "                <table\n" +
-            "                  class=\"email-footer\"\n" +
-            "                  align=\"center\"\n" +
-            "                  width=\"570\"\n" +
-            "                  cellpadding=\"0\"\n" +
-            "                  cellspacing=\"0\"\n" +
-            "                  role=\"presentation\"\n" +
-            "                >\n" +
-            "                  <tr>\n" +
-            "                    <td class=\"content-cell\" align=\"center\">\n" +
-            "                      <p class=\"f-fallback sub align-center\">\n" +
-            "                        [Company Name, LLC]\n" +
-            "                        <br />NY 10016, USA<br />431 5th Ave, New York\n" +
-            "                      </p>\n" +
-            "                    </td>\n" +
-            "                  </tr>\n" +
-            "                </table>\n" +
-            "              </td>\n" +
-            "            </tr>\n" +
-            "          </table>\n" +
-            "        </td>\n" +
-            "      </tr>\n" +
             "    </table>\n" +
             "  </body>\n" +
             "</html>\n";
@@ -1315,21 +1267,6 @@ public class EmailService implements EmailSender{
                 "            <tbody>\n" + productToTable(products) +"</tbody>\n" +
                 "          </table>\n" +
                 "        </div>\n" +
-                "      </div>\n" +
-                "      <div style=\"margin-top: 2rem\">\n" +
-                "        <table style=\"text-align: center; margin-left: auto; margin-right: auto\">\n" +
-                "          <tr>\n" +
-                "            <td>\n" +
-                "              <p>\n" +
-                "                [Gaming Pro Market, LLC]\n" +
-                "                <br />\n" +
-                "                NY 10016, USA\n" +
-                "                <br />\n" +
-                "                431 5th Ave, New York\n" +
-                "              </p>\n" +
-                "            </td>\n" +
-                "          </tr>\n" +
-                "        </table>\n" +
                 "      </div>\n" +
                 "    </div>\n" +
                 "    </div>\n" +
@@ -1451,19 +1388,6 @@ public class EmailService implements EmailSender{
                 "          <p style=\"font-size: 1.125rem; text-align: center\">\n" +
                 "            Bizden alış veriş yaptığınız için teşekkür ederiz!\n" +
                 "          </p>\n" +
-                "           <table style=\"text-align: center; margin-left: auto; margin-right: auto\">\n" +
-                "            <tr>\n" +
-                "              <td>\n" +
-                "                <p>\n" +
-                "                  [Meze Dükkanı, LLC]\n" +
-                "                  <br />\n" +
-                "                  NY 10016, USA\n" +
-                "                  <br />\n" +
-                "                  431 5th Ave, New York\n" +
-                "                </p>\n" +
-                "              </td>\n" +
-                "            </tr>\n" +
-                "          </table>\n" +
                 "        </div>\n" +
                 "      </div>\n" +
                 "    </div>";
@@ -1509,21 +1433,6 @@ public class EmailService implements EmailSender{
                 "          <div style=\"background: linear-gradient(175deg, rgb(51, 146, 181), rgb(29, 53, 87)); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; text-align: center;\">\n" +
                 "            <p style=\"margin: 0; padding-top: .7rem; padding-bottom: .7rem; font-size:1.15rem;\"> Promosyon kodunu kullanın : <span style=\"background-color: rgb(237, 237, 237); border-radius: 4px; padding:0.2rem 0.4rem;\">" + coupon.getCode()+ "</span></p>\n" +
                 "          </div>\n" +
-                "        </div>\n" +
-                "        <div style=\"margin-top: 2rem\">\n" +
-                "          <table style=\"text-align: center; margin-left: auto; margin-right: auto\">\n" +
-                "            <tr>\n" +
-                "              <td>\n" +
-                "                <p>\n" +
-                "                  [Meze Dükkanı, LLC]\n" +
-                "                  <br />\n" +
-                "                  NY 10016, USA\n" +
-                "                  <br />\n" +
-                "                  431 5th Ave, New York\n" +
-                "                </p>\n" +
-                "              </td>\n" +
-                "            </tr>\n" +
-                "          </table>\n" +
                 "        </div>\n" +
                 "      </div>\n" +
                 "    </div>\n" +

@@ -16,7 +16,7 @@ public class ProductDTO {
 
     private Long id;
 
-    private String sku;
+//    private String sku;
 
     private String title;
 
@@ -34,7 +34,7 @@ public class ProductDTO {
 
     private Integer stockAmount;
 
-    private String slug;
+//    private String slug;
 
     private Boolean featured;
 

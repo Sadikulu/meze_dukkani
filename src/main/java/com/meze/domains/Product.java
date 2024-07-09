@@ -25,14 +25,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
-    private String sku;
+//    @Column(length = 100, nullable = false)
+//    private String sku;
 
     @Column(length = 150, nullable = false)
     private String title;
 
-    @Column(length = 500)
-    private String shortDesc;
+//    @Column(length = 500)
+//    private String shortDesc;
 
     @Column(length = 3500)
     private String longDesc;
@@ -52,8 +52,8 @@ public class Product {
     @Column
     private Integer stockAmount;
 
-    @Column(length = 100, nullable = false)
-    private String slug;
+//    @Column(length = 100, nullable = false)
+//    private String slug;
 
     @Column(nullable = false)
     private Boolean featured;

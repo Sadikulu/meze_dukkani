@@ -69,7 +69,7 @@ meze:
     jwtExpirationMs: 86400000
     mailAddress: mezedukkan915@gmail.com
     backendLink: https://ecommerce-backend-v2.herokuapp.com/
-    resetPasswordLink: https://mezedukkani.netlify.app/
+    resetPasswordLink: https://meze-dukkani.vercel.app/
 
 info:
   application:

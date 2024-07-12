@@ -1,0 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile:
+cors:
+  allowed:
+    origins: http://localhost:3000

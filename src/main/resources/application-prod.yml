@@ -1,0 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile:
+cors:
+  allowed:
+    origins: https://your-production-domain.com,https://another-allowed-domain.com

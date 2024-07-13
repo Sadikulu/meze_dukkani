@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,10 +25,10 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<PageImpl<ProductDTO>> getProducts(@RequestParam(value = "q",required = false) String query,
                                                             @RequestParam(value = "categories",required = false) List<Long> categoryId,
-                                                            @RequestParam(value = "brands",required = false) List<Long> brandId,
+                                                            //@RequestParam(value = "brands",required = false) List<Long> brandId,
                                                             @RequestParam(value = "minPrice",required = false) Integer minPrice,
                                                             @RequestParam(value = "maxPrice",required = false) Integer maxPrice,
                                                             @RequestParam(value = "status",required = false) ProductStatus status,
@@ -35,16 +36,16 @@ public class ProductController {
                                                             @RequestParam("size") int size,
                                                             @RequestParam("sort") String prop,
                                                             @RequestParam(value = "direction",
-                                                                    required = false,
-                                                                    defaultValue = "DESC") Direction direction){
+                                                                            required = false,
+                                                                            defaultValue = "DESC") Direction direction){
         Pageable pageable = PageRequest.of(page,size, Sort.by(direction,prop));
-        PageImpl<ProductDTO> productDTO = productService.findAllWithQueryAndPage(query,categoryId,brandId,minPrice,maxPrice,status,pageable);
+        PageImpl<ProductDTO> productDTO = productService.findAllWithQueryAndPage(query,categoryId,minPrice,maxPrice,status,pageable);
         return ResponseEntity.ok(productDTO);
     }
 
     @GetMapping("/most-popular")
     public ResponseEntity<Page<ProductDTO>> getMostPopularProducts(@RequestParam("page") int page,
-                                                                   @RequestParam("size") int size){
+                                                                              @RequestParam("size") int size){
         Pageable pageable = PageRequest.of(page,size);
         Page<ProductDTO> productDTOPage = productService.findMostPopularProductsOfLastMonth(pageable);
         return ResponseEntity.ok(productDTOPage);
@@ -55,8 +56,8 @@ public class ProductController {
                                                                 @RequestParam("size") int size,
                                                                 @RequestParam("sort") String prop,
                                                                 @RequestParam(value = "direction",
-                                                                        required = false,
-                                                                        defaultValue = "DESC")Direction direction){
+                                                                         required = false,
+                                                                         defaultValue = "DESC")Direction direction){
         Pageable pageable = PageRequest.of(page,size, Sort.by(direction,prop));
         Page<ProductDTO> productDTOPage = productService.findFeaturedProducts(pageable);
         return ResponseEntity.ok(productDTOPage);
@@ -67,8 +68,8 @@ public class ProductController {
                                                            @RequestParam("size") int size,
                                                            @RequestParam("sort") String prop,
                                                            @RequestParam(value = "direction",
-                                                                   required = false,
-                                                                   defaultValue = "DESC")Direction direction){
+                                                                         required = false,
+                                                                         defaultValue = "DESC")Direction direction){
         Pageable pageable = PageRequest.of(page,size, Sort.by(direction, prop));
         Page<ProductDTO> productDTOPage = productService.findNewProducts(pageable);
         return ResponseEntity.ok(productDTOPage);
@@ -101,9 +102,9 @@ public class ProductController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<GPMResponse> updateProduct(@PathVariable Long id,
                                                      @Valid @RequestBody ProductUpdateRequest productUpdateRequest){
-        ProductDTO productDTO = productService.updateProduct(id, productUpdateRequest);
-        GPMResponse response = new GPMResponse(ResponseMessage.PRODUCT_UPDATED_RESPONSE_MESSAGE,true,productDTO);
-        return ResponseEntity.ok(response);
+    ProductDTO productDTO = productService.updateProduct(id, productUpdateRequest);
+    GPMResponse response = new GPMResponse(ResponseMessage.PRODUCT_UPDATED_RESPONSE_MESSAGE,true,productDTO);
+    return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}/admin")

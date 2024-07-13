@@ -14,8 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Set;
+
 
 @RestController
 @RequestMapping("/image")
@@ -27,10 +29,10 @@ public class ImageFileController {
     @PostMapping("/upload")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<ImageSavedResponse> uploadFile(@RequestParam("image") MultipartFile[] image){
-        Set<String> images = imageFileService.saveImage(image);
-        ImageSavedResponse response=new ImageSavedResponse
-                (images,ResponseMessage.IMAGE_SAVED_RESPONSE_MESSAGE,true);
-        return ResponseEntity.ok(response);
+       Set<String> images = imageFileService.saveImage(image);
+       ImageSavedResponse response=new ImageSavedResponse
+               (images, ResponseMessage.IMAGE_SAVED_RESPONSE_MESSAGE,true);
+       return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/showcase")
@@ -69,6 +71,6 @@ public class ImageFileController {
     public ResponseEntity<GPMResponse>deleteImageFile(@PathVariable String id){
         imageFileService.removeById(id);
         GPMResponse response =new GPMResponse(ResponseMessage.IMAGE_DELETE_RESPONSE_MESSAGE,true);
-        return ResponseEntity.ok(response);
+                return ResponseEntity.ok(response);
     }
 }

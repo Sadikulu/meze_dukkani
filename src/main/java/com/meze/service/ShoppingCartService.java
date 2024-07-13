@@ -7,8 +7,6 @@ import com.meze.dto.ShoppingCartDTO;
 import com.meze.dto.ShoppingCartItemDTO;
 import com.meze.dto.request.ShoppingCartRequest;
 import com.meze.dto.request.ShoppingCartUpdateRequest;
-import com.meze.dto.response.GPMResponse;
-import com.meze.dto.response.ResponseMessage;
 import com.meze.exception.BadRequestException;
 import com.meze.exception.ResourceNotFoundException;
 import com.meze.exception.message.ErrorMessage;
@@ -18,9 +16,11 @@ import com.meze.repository.ShoppingCartItemRepository;
 import com.meze.repository.ShoppingCartRepository;
 import com.meze.reusableMethods.DiscountCalculator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -86,7 +86,7 @@ public class ShoppingCartService {
         ShoppingCart shoppingCart = shoppingCartRepository.findByCartUUID(cartUUID).orElseThrow(()->
                 new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE));
         ShoppingCartItem foundItem = shoppingCartItemRepository.findByProductIdAndShoppingCartCartUUID(productId,
-                cartUUID);
+               cartUUID);
         shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()-foundItem.getTotalPrice());
         shoppingCartItemRepository.delete(foundItem);
         shoppingCartRepository.save(shoppingCart);
@@ -104,18 +104,19 @@ public class ShoppingCartService {
                 new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE));
         Product product = productService.findProductById(shoppingCartUpdateRequest.getProductId());
         ShoppingCartItem foundItem = shoppingCartItemRepository.findByProductIdAndShoppingCartCartUUID(product.getId(),shoppingCart.getCartUUID());
-        switch (op){
-            case "increase":
-                foundItem.setQuantity(foundItem.getQuantity()+1);
-                shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()+foundItem.getProduct().getPrice());
-                break;
-            case "decrease":
-                foundItem.setQuantity(foundItem.getQuantity()-1);
-                shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()-foundItem.getProduct().getPrice());
-                break;
-        }
-        Double totalPrice = discountCalculator.totalPriceWithDiscountCalculate(foundItem.getQuantity(), product.getPrice(), product.getDiscount());
-        foundItem.setTotalPrice(totalPrice);
+            switch (op){
+                case "increase":
+                    foundItem.setQuantity(foundItem.getQuantity()+1);
+                    shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()+foundItem.getProduct().getPrice());
+                    break;
+                case "decrease":
+                    foundItem.setQuantity(foundItem.getQuantity()-1);
+                    shoppingCart.setGrandTotal(shoppingCart.getGrandTotal()-foundItem.getProduct().getPrice());
+                    break;
+            }
+            Double totalPrice = discountCalculator.totalPriceWithDiscountCalculate(foundItem.getQuantity(), product.getPrice());
+            foundItem.setTotalPrice(totalPrice);
+
         foundItem.setUpdateAt(LocalDateTime.now());
         shoppingCartItemRepository.save(foundItem);
         save(shoppingCart);
@@ -134,7 +135,7 @@ public class ShoppingCartService {
             shoppingCartRepository.save(shoppingCart);
 
         }
-        return shoppingCartMapper.shoppingCartToShoppingCartDTO(shoppingCart);
+       return shoppingCartMapper.shoppingCartToShoppingCartDTO(shoppingCart);
     }
 
     public void save(ShoppingCart shoppingCart) {

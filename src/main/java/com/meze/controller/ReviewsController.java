@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 
 @RestController
@@ -26,8 +27,8 @@ public class ReviewsController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER','CUSTOMER')")
     public ResponseEntity<GPMResponse> saveReview(@RequestBody ReviewRequest reviewRequest){
         ReviewDTO reviewDTO = reviewService.saveReview(reviewRequest);
-        GPMResponse KSSResponse = new GPMResponse(ResponseMessage.REVIEW_SAVE_RESPONSE,true, reviewDTO);
-        return new ResponseEntity<> (KSSResponse, HttpStatus.CREATED);
+        GPMResponse gpmResponse = new GPMResponse(ResponseMessage.REVIEW_SAVE_RESPONSE,true, reviewDTO);
+       return new ResponseEntity<> (gpmResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("/admin")
@@ -52,12 +53,12 @@ public class ReviewsController {
 
     @GetMapping("/product/{id}")
     public ResponseEntity<Page<ReviewDTO>> findReviewByProductId(@PathVariable("id") Long id,
-                                                                 @RequestParam("page") int page,
-                                                                 @RequestParam("size") int size,
-                                                                 @RequestParam("sort") String prop,
-                                                                 @RequestParam(value="direction",
-                                                                         required = false,
-                                                                         defaultValue = "DESC") Sort.Direction direction){
+                                                           @RequestParam("page") int page,
+                                                           @RequestParam("size") int size,
+                                                           @RequestParam("sort") String prop,
+                                                           @RequestParam(value="direction",
+                                                                   required = false,
+                                                                   defaultValue = "DESC") Sort.Direction direction){
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
         Page<ReviewDTO> reviewDTO = reviewService.findReviewByProductId(id,pageable);
@@ -86,12 +87,12 @@ public class ReviewsController {
     @GetMapping("/admin/user/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<Page<ReviewDTO>> findUserAllReviews(@PathVariable("id") Long userId,
-                                                              @RequestParam("page") int page,
-                                                              @RequestParam("size") int size,
-                                                              @RequestParam("sort") String prop,
-                                                              @RequestParam(value="direction",
-                                                                      required = false,
-                                                                      defaultValue = "DESC") Sort.Direction direction){
+                                                        @RequestParam("page") int page,
+                                                        @RequestParam("size") int size,
+                                                        @RequestParam("sort") String prop,
+                                                        @RequestParam(value="direction",
+                                                                required = false,
+                                                                defaultValue = "DESC") Sort.Direction direction){
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
         Page<ReviewDTO> reviewDTO=reviewService.findUserAllReviews(userId,pageable);
         return  ResponseEntity.ok(reviewDTO);
@@ -101,15 +102,15 @@ public class ReviewsController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<GPMResponse> updateReviewById(@Valid @PathVariable("id") Long id, @RequestBody ReviewUpdateRequest reviewUpdateRequest){
         ReviewDTO reviewDTO=reviewService.updateReviewById(id, reviewUpdateRequest);
-        GPMResponse KSSResponse = new GPMResponse(ResponseMessage.REVIEW_UPDATED_RESPONSE,true,reviewDTO);
-        return ResponseEntity.ok(KSSResponse);
+        GPMResponse gpmResponse = new GPMResponse(ResponseMessage.REVIEW_UPDATED_RESPONSE,true,reviewDTO);
+        return ResponseEntity.ok(gpmResponse);
     }
 
     @DeleteMapping("{id}/admin")
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<GPMResponse> deleteReviewById(@PathVariable("id") Long id){
         ReviewDTO reviewDTO = reviewService.deleteReviewById(id);
-        GPMResponse KSSResponse = new GPMResponse(ResponseMessage.REVIEW_DELETE_RESPONSE,true,reviewDTO);
-        return ResponseEntity.ok(KSSResponse);
+        GPMResponse gpmResponse = new GPMResponse(ResponseMessage.REVIEW_DELETE_RESPONSE,true,reviewDTO);
+        return ResponseEntity.ok(gpmResponse);
     }
 }

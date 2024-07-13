@@ -11,7 +11,10 @@ import com.meze.dto.response.GPMResponse;
 import com.meze.dto.response.ResponseMessage;
 import com.meze.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -76,26 +79,26 @@ public class UserController {
     @GetMapping("/pages")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<PageImpl<UserDTO>> getAllUsersByPage(@RequestParam(value = "q",required = false)String query,
-                                                               @RequestParam(value = "role",required = false)RoleType role,
+                                                               @RequestParam(value = "role",required = false) RoleType role,
                                                                @RequestParam("page") int page,
                                                                @RequestParam("size") int size, @RequestParam("sort") String prop,
                                                                @RequestParam(value = "direction", required = false, defaultValue = "DESC") Direction direction) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
-        PageImpl<UserDTO> userDTOPage = userService.getAllUserPage(query,role,pageable);
+            PageImpl<UserDTO> userDTOPage = userService.getAllUserPage(query,role,pageable);
         return ResponseEntity.ok(userDTOPage);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<List<UserDTO>> getAllUsers(@RequestParam(value = "q",required = false)String query,
-                                                     @RequestParam(value = "role",required = false)RoleType role,
-                                                     @RequestParam(value = "birthday",required = false)boolean birthday,
-                                                     @RequestParam(value = "anniversary",required = false)boolean anniversary) {
+                                                               @RequestParam(value = "role",required = false)RoleType role,
+                                                               @RequestParam(value = "birthday",required = false)boolean birthday,
+                                                               @RequestParam(value = "anniversary",required = false)boolean anniversary) {
         List<UserDTO> userDTO = userService.getAllUser(query,role,birthday,anniversary);
         return ResponseEntity.ok(userDTO);
     }
 
-    //getUserById
+     //getUserById
     @GetMapping("/{id}/admin")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
@@ -106,7 +109,7 @@ public class UserController {
     @PutMapping("/{id}/admin")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<GPMResponse> updateUserAuth(@PathVariable("id") Long id,
-                                                      @Valid @RequestBody AdminUserUpdateRequest adminUserUpdateRequest) {
+                                                     @Valid @RequestBody AdminUserUpdateRequest adminUserUpdateRequest) {
         UserDTO userDTO= userService.updateUserAuth(id,adminUserUpdateRequest);
         GPMResponse response = new GPMResponse(ResponseMessage.USER_UPDATE_RESPONSE_MESSAGE, true,userDTO);
         return ResponseEntity.ok(response);

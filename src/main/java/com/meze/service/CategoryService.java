@@ -1,13 +1,9 @@
 package com.meze.service;
 
-import com.meze.domains.Brand;
 import com.meze.domains.Category;
 import com.meze.domains.Role;
-import com.meze.domains.User;
-import com.meze.domains.enums.BrandStatus;
 import com.meze.domains.enums.CategoryStatus;
 import com.meze.domains.enums.RoleType;
-import com.meze.dto.BrandDTO;
 import com.meze.dto.CategoryDTO;
 import com.meze.dto.request.CategoryRequest;
 import com.meze.dto.request.CategoryUpdateRequest;
@@ -177,8 +173,8 @@ public class CategoryService {
     }
 
     public List<CategoryDTO> getAllCategoryList() {
-        List<Category> categoryList = categoryRepository.findAll();
-        return categoryMapper.categoryListToCategoryDTOList(categoryList);
+    List<Category> categoryList = categoryRepository.findAll();
+    return categoryMapper.categoryListToCategoryDTOList(categoryList);
     }
 
     public void removeAllBuiltInFalseCategories() {

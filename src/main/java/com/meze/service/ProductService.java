@@ -14,8 +14,7 @@ import com.meze.exception.ConflictException;
 import com.meze.exception.ResourceNotFoundException;
 import com.meze.exception.message.ErrorMessage;
 import com.meze.mapper.ProductMapper;
-//import com.meze.repository.BrandRepository;
-import com.meze.repository.ImageFileRepository;
+//import com.meze.repository.ImageFileRepository;
 import com.meze.repository.ProductRepository;
 import com.meze.repository.UserRepository;
 import com.meze.reusableMethods.UniqueIdGenerator;
@@ -44,7 +43,7 @@ public class ProductService {
     private final UniqueIdGenerator uniqueIdGenerator;
     private final UserService userService;
     private final RoleService roleService;
-    private final ImageFileRepository imageFileRepository;
+//    private final ImageFileRepository imageFileRepository;
 //    private final BrandRepository brandRepository;
     private final EntityManager entityManager;
     private final UserRepository userRepository;
@@ -84,10 +83,12 @@ public class ProductService {
         product.setSku(uniqueIdGenerator.generateUniqueId(8));
         product.setSlug(URLEncoder.encode(productRequest.getTitle(), StandardCharsets.UTF_8));
         product.setStatus(ProductStatus.NOT_PUBLISHED);
-        product.setDiscountedPrice(product.getPrice()*(100-product.getDiscount())/100);
-//        product.setBrand(brand);
+        //product.setDiscountedPrice(Double.parseDouble(product.getPrice())*(100-product.getDiscount())/100);
+        //product.setBrand(brand);
+
+        product.setPrice(productRequest.getPrice());
         product.setImage(imageFiles);
-        product.setStatus(productRequest.getStatus());
+        //product.setStatus(productRequest.getStatus());
         product.setCategory(category);
         product.setDiscountedPrice(product.getPrice()*(100-product.getDiscount())/100);
         productRepository.save(product);
@@ -95,16 +96,16 @@ public class ProductService {
         return productMapper.productToProductDTO(product);
     }
 
-    public ProductDTO updateProduct(Long id,ProductUpdateRequest productUpdateRequest) {
+    public ProductDTO updateProduct(Long id, ProductUpdateRequest productUpdateRequest) {
         Product product = findProductById(id);
         Set<ImageFile> imageFiles = product.getImage();
         for (String each:productUpdateRequest.getImageId()) {
-            Product foundProduct = productRepository.findProductByImageId(each);
-            if (foundProduct==null){
-                imageFiles.add(imageFileService.getImageById(each));
-            }else{
-                throw new ConflictException(ErrorMessage.IMAGE_USED_MESSAGE);
-            }
+                Product foundProduct = productRepository.findProductByImageId(each);
+                if (foundProduct==null){
+                    imageFiles.add(imageFileService.getImageById(each));
+                }else{
+                    throw new ConflictException(ErrorMessage.IMAGE_USED_MESSAGE);
+                }
         }
         boolean hasShowcase = false;
         for (ImageFile each:imageFiles) {
@@ -128,7 +129,7 @@ public class ProductService {
 
 //      product = productMapper.productUpdateRequestToProduct(productUpdateRequest);
         product.setTitle( productUpdateRequest.getTitle() );
-//        product.setShortDesc( productUpdateRequest.getShortDesc() );
+        //product.setShortDesc( productUpdateRequest.getShortDesc() );
         product.setLongDesc( productUpdateRequest.getLongDesc() );
         product.setPrice( productUpdateRequest.getPrice() );
         product.setTax( productUpdateRequest.getTax() );
@@ -143,10 +144,11 @@ public class ProductService {
 //        product.setLength( productUpdateRequest.getLength() );
 //        product.setHeight( productUpdateRequest.getHeight() );
         product.setUpdateAt( LocalDateTime.now() );
-//        product.setBrand(brand);
+        //product.setBrand(brand);
         product.setCategory(category);
         product.setImage(imageFiles);
         product.setDiscountedPrice(product.getPrice()*(100-product.getDiscount())/100);
+        product.setPrice(productUpdateRequest.getPrice());
         productRepository.save(product);
 
         return productMapper.productToProductDTO(product);
@@ -158,7 +160,7 @@ public class ProductService {
             throw new BadRequestException(ErrorMessage.NOT_PERMITTED_METHOD_MESSAGE);
         }
         List<Product> products = productRepository.checkOrderItemsByID(id);
-        if (products.size()>0){
+        if (!products.isEmpty()){
             throw new BadRequestException(ErrorMessage.PRODUCT_USED_BY_ORDER_MESSAGE);
         }
 
@@ -183,7 +185,7 @@ public class ProductService {
             }else throw new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE);
         } catch (ResourceNotFoundException e) {
             CategoryStatus cStatus = CategoryStatus.PUBLISHED;
-//            BrandStatus bStatus = BrandStatus.PUBLISHED;
+            //BrandStatus bStatus = BrandStatus.PUBLISHED;
             ProductStatus pStatus = ProductStatus.PUBLISHED;
             mostPopularProductInfoList = productRepository.findMostPopularProductsOfLastMonth(startDate, cStatus, pStatus, pageable);
         }
@@ -217,7 +219,7 @@ public class ProductService {
             }else throw new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE);
         } catch (ResourceNotFoundException e) {
             CategoryStatus cStatus = CategoryStatus.PUBLISHED;
-//            BrandStatus bStatus = BrandStatus.PUBLISHED;
+            //BrandStatus bStatus = BrandStatus.PUBLISHED;
             ProductStatus pStatus = ProductStatus.PUBLISHED;
             featuredProductList = productRepository.findFeaturedProducts(cStatus,pStatus,pageable);
         }
@@ -235,7 +237,7 @@ public class ProductService {
             }else throw new ResourceNotFoundException(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE);
         } catch (ResourceNotFoundException e) {
             CategoryStatus cStatus = CategoryStatus.PUBLISHED;
-//            BrandStatus bStatus = BrandStatus.PUBLISHED;
+            //BrandStatus bStatus = BrandStatus.PUBLISHED;
             ProductStatus pStatus = ProductStatus.PUBLISHED;
             newProductList = productRepository.findNewProducts(cStatus,pStatus,pageable);
         }
@@ -249,7 +251,7 @@ public class ProductService {
             Role role = roleService.findByRoleName(RoleType.ROLE_ADMIN);
             boolean isAdmin = userService.getCurrentUser().getRoles().stream().anyMatch(r->r.equals(role));
             if (isAdmin){
-                product = findProductById(id);
+               product = findProductById(id);
             }else throw new ResourceNotFoundException(String.format(ErrorMessage.PRODUCT_NOT_FOUND_MESSAGE,id));
         } catch (ResourceNotFoundException e) {
             product = findProductById(id);
@@ -261,24 +263,24 @@ public class ProductService {
     }
 
     public List<Product> getAllProducts(){
-        return productRepository.findAll();
+       return productRepository.findAll();
 
     }
 
     public ProductDTO setFavorite(Long id) {
-        User user = userService.getCurrentUser();
-        Product product = findProductById(id);
-        if (!user.getFavoriteList().contains(product)) {
-            user.getFavoriteList().add(product);
-        }else {
-            user.getFavoriteList().remove(product);
-        }
-        userService.save(user);
-        productRepository.save(product);
-        return productMapper.productToProductDTO(product);
+       User user = userService.getCurrentUser();
+       Product product = findProductById(id);
+       if (!user.getFavoriteList().contains(product)) {
+           user.getFavoriteList().add(product);
+       }else {
+           user.getFavoriteList().remove(product);
+       }
+            userService.save(user);
+            productRepository.save(product);
+       return productMapper.productToProductDTO(product);
     }
 
-    public PageImpl<ProductDTO> findAllWithQueryAndPage(String query, List<Long> categoryId, List<Long> brandId,Integer minPrice, Integer maxPrice,ProductStatus status, Pageable pageable) {
+    public PageImpl<ProductDTO> findAllWithQueryAndPage(String query, List<Long> categoryId,Integer minPrice, Integer maxPrice,ProductStatus status, Pageable pageable) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = cb.createQuery(Product.class);
         Root<Product> root = criteriaQuery.from(Product.class);
@@ -288,8 +290,9 @@ public class ProductService {
         if (query != null && !query.isEmpty()) {
             String likeSearchText = "%" + query.toLowerCase(Locale.US) + "%";
             Predicate searchByTitle = cb.like(cb.lower(root.get("title")), likeSearchText);
-//            Predicate searchByShortDesc = cb.like(cb.lower(root.get("shortDesc")), likeSearchText);
-            predicates.add(cb.or(searchByTitle));
+            //Predicate searchByShortDesc = cb.like(cb.lower(root.get("shortDesc")), likeSearchText);
+            predicates.add(cb.or(searchByTitle//, searchByShortDesc
+            ));
         }
 
         if (categoryId != null && !categoryId.isEmpty()) {
@@ -323,12 +326,12 @@ public class ProductService {
                 }
             }else throw new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND_MESSAGE);
         }catch(ResourceNotFoundException e){
-            CategoryStatus cStatus = CategoryStatus.PUBLISHED;
-//            BrandStatus bStatus = BrandStatus.PUBLISHED;
-            ProductStatus pStatus = ProductStatus.PUBLISHED;
+                CategoryStatus cStatus = CategoryStatus.PUBLISHED;
+                //BrandStatus bStatus = BrandStatus.PUBLISHED;
+                ProductStatus pStatus = ProductStatus.PUBLISHED;
             predicates.add(cb.and(
                     cb.equal(root.get("status"), pStatus),
-//                    cb.equal(root.get("brand").get("status"), bStatus),
+                    //cb.equal(root.get("brand").get("status"), bStatus),
                     cb.equal(root.get("category").get("status"), cStatus)
             ));
         }

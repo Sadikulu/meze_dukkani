@@ -22,9 +22,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class          GamingProMarketExceptionHandler extends ResponseEntityExceptionHandler {
+public class MezeDukkaniExceptionHandler extends ResponseEntityExceptionHandler {
 
-    Logger logger = LoggerFactory.getLogger(GamingProMarketExceptionHandler.class);
+    Logger logger = LoggerFactory.getLogger(MezeDukkaniExceptionHandler.class);
 
     private ResponseEntity<Object> buildResponseEntity(ApiResponseError error) {
         logger.error(error.getMessage()); //  exception fırlarsa mesajını loggladık

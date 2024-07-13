@@ -2,17 +2,18 @@ package com.meze.service;
 
 import com.meze.domains.User;
 import com.meze.domains.UserAddress;
+import com.meze.domains.enums.UserStatus;
 import com.meze.dto.UserAddressDTO;
 import com.meze.dto.request.UserAddressRequest;
 import com.meze.dto.request.UserAddressUpdate;
 import com.meze.exception.BadRequestException;
+import com.meze.exception.ConflictException;
 import com.meze.exception.ResourceNotFoundException;
 import com.meze.exception.message.ErrorMessage;
 import com.meze.mapper.UserAddressMapper;
 import com.meze.repository.UserAddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

@@ -1,19 +1,19 @@
 package com.meze.controller;
 
+import javax.validation.Valid;
 import com.meze.dto.UserDTO;
 import com.meze.dto.request.ForgotPasswordRequest;
-import com.meze.dto.request.LoginRequest;
 import com.meze.dto.request.PasswordResetRequest;
-import com.meze.dto.request.RegisterRequest;
-import com.meze.dto.response.GPMResponse;
-import com.meze.dto.response.LoginResponse;
-import com.meze.dto.response.ResponseMessage;
-import com.meze.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
+import com.meze.dto.request.LoginRequest;
+import com.meze.dto.request.RegisterRequest;
+import com.meze.dto.response.LoginResponse;
+import com.meze.dto.response.ResponseMessage;
+import com.meze.dto.response.GPMResponse;
+import com.meze.service.UserService;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +27,6 @@ public class UserJwtController {
         GPMResponse response = new GPMResponse(ResponseMessage.REGISTER_RESPONSE_MESSAGE,true,token);
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
-
     @GetMapping(path = "confirm")
     public ResponseEntity<GPMResponse> confirm(@RequestParam("token") String token) {
         UserDTO userDTO = userService.confirmToken(token);
@@ -37,11 +36,11 @@ public class UserJwtController {
 
     // login
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(//@RequestHeader(value = "cartUUID",required = false)String cartUUID,
-                                                      @Valid @RequestBody LoginRequest loginRequest)  {
-        LoginResponse response = userService.loginUser(//cartUUID,
-                loginRequest);
+    public ResponseEntity<LoginResponse> authenticate(@RequestHeader(value = "cartUUID",required = false)String cartUUID,@Valid @RequestBody LoginRequest loginRequest)  {
+        System.out.println("cartUUID = " + cartUUID);
+        LoginResponse response = userService.loginUser(cartUUID,loginRequest);
         return new ResponseEntity<>(response,HttpStatus.OK);
+
     }
 
     @PostMapping("/forgot-password")
@@ -56,5 +55,7 @@ public class UserJwtController {
         String message = userService.confirmResetToken(token,passwordResetRequest);
         GPMResponse response = new GPMResponse(message,true);
         return ResponseEntity.ok(response);
+
     }
+
 }

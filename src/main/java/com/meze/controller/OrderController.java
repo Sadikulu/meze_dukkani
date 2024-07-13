@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -56,10 +55,10 @@ public class OrderController {
 
     @GetMapping("/auth")
     public ResponseEntity<Page<OrderDTO>> getAuthOrdersWithPage(@RequestParam("page") int page,
-                                                           @RequestParam("size") int size,
-                                                           @RequestParam("sort") String prop,
-                                                           @RequestParam(value = "direction",
-                                                                   required = false, defaultValue = "DESC")Sort.Direction direction) {
+                                                                @RequestParam("size") int size,
+                                                                @RequestParam("sort") String prop,
+                                                                @RequestParam(value = "direction",
+                                                                        required = false, defaultValue = "DESC")Sort.Direction direction) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
         Page<OrderDTO> pageDTO = orderService.findAuthOrderWithPage(pageable);
         return ResponseEntity.ok(pageDTO);
@@ -84,10 +83,10 @@ public class OrderController {
 
     @PostMapping("/auth")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')or hasRole('CUSTOMER')")
-    public ResponseEntity<GPMResponse> createOrder(@RequestHeader("cartUUID") String cartUUID,@Valid @RequestBody OrderRequest orderRequest){
-      OrderDTO orderDTO=  orderService.createOrder(cartUUID,orderRequest);
-      GPMResponse response=new GPMResponse(ResponseMessage.ORDER_CREATE_RESPONSE,
-              true,orderDTO);
+    public ResponseEntity<GPMResponse> createOrder(@RequestHeader("cartUUID") String cartUUID, @Valid @RequestBody OrderRequest orderRequest){
+        OrderDTO orderDTO=  orderService.createOrder(cartUUID,orderRequest);
+        GPMResponse response=new GPMResponse(ResponseMessage.ORDER_CREATE_RESPONSE,
+                true,orderDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

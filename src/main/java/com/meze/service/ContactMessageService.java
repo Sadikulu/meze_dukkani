@@ -3,6 +3,7 @@ package com.meze.service;
 import com.meze.domains.ContactMessage;
 import com.meze.dto.ContactMessageDTO;
 import com.meze.dto.request.ContactMessageRequest;
+import com.meze.exception.BadRequestException;
 import com.meze.exception.ResourceNotFoundException;
 import com.meze.exception.message.ErrorMessage;
 import com.meze.mapper.ContactMessageMapper;
@@ -11,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @RequiredArgsConstructor

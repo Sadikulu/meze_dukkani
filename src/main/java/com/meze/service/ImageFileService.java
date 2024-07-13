@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +29,6 @@ public class ImageFileService {
     private final ProductRepository productRepository;
 
     public Set<String> saveImage(MultipartFile[] file) {
-
         ImageFile imageFile=null;
         Set<ImageFile> images = new HashSet<>();
 
@@ -64,7 +62,7 @@ public class ImageFileService {
     public List<ImageFileDTO> getAllImages() {
         List<ImageFile> imageList = imageFileRepository.findAll();
         return imageList.stream().map(imgFile ->{
-           String imageUri= ServletUriComponentsBuilder.fromCurrentContextPath()
+            String imageUri= ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/image/download/")
                     .path(imgFile.getId())
                     .toUriString();

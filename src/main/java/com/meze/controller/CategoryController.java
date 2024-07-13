@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAllCategoryList());
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<GPMResponse> saveCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
         CategoryDTO categoryDTO= categoryService.saveCategory(categoryRequest);
@@ -44,7 +43,7 @@ public class CategoryController {
 
     @GetMapping()
     public ResponseEntity<Page<CategoryDTO>> getAllCategoriesWithPage(@RequestParam(value = "q",required = false)String query,
-                                                                      @RequestParam(value = "status",required = false) CategoryStatus status,
+                                                                      @RequestParam(value = "status",required = false)CategoryStatus status,
                                                                       @RequestParam("page") int page,
                                                                       @RequestParam("size") int size, @RequestParam("sort") String prop,
                                                                       @RequestParam(value = "direction", required = false, defaultValue = "DESC") Direction direction) {
@@ -59,7 +58,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryDTO);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<GPMResponse> updateCategory(@PathVariable Long id,
                                                       @Valid @RequestBody CategoryUpdateRequest categoryUpdateRequest){

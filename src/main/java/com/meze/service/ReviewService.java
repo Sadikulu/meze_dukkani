@@ -1,24 +1,20 @@
 package com.meze.service;
 
-import com.meze.domains.Product;
-import com.meze.domains.Review;
-import com.meze.domains.Role;
-import com.meze.domains.User;
-import com.meze.domains.enums.ReviewStatus;
-import com.meze.domains.enums.RoleType;
+import com.meze.domains.*;
+import com.meze.domains.enums.*;
 import com.meze.dto.ReviewDTO;
 import com.meze.dto.request.ReviewRequest;
 import com.meze.dto.request.ReviewUpdateRequest;
 import com.meze.exception.ResourceNotFoundException;
 import com.meze.exception.message.ErrorMessage;
 import com.meze.mapper.ReviewMapper;
+import com.meze.repository.OrderRepository;
 import com.meze.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -39,7 +35,7 @@ public class ReviewService {
     private final UserService userService;
     private final EntityManager entityManager;
     private final ProductService productService;
-//    private final OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
     private final RoleService roleService;
 
 
@@ -48,19 +44,19 @@ public class ReviewService {
     public ReviewDTO saveReview(ReviewRequest reviewRequest) {
         User user = userService.getCurrentUser();
         Product product=productService.findProductById(reviewRequest.getProductId());
-//        Boolean isOrderExists = orderRepository.existsByUserIdAndProductId(user.getId(),product.getId());
-//        Review review = null;
-//        if (isOrderExists){
-            Review review = new Review();
+        Boolean isOrderExists = orderRepository.existsByUserIdAndProductId(user.getId(),product.getId());
+        Review review = null;
+        if (isOrderExists){
+            review = new Review();
             review.setContent(reviewRequest.getContent());
             review.setRating(reviewRequest.getRating());
             review.setStatus(ReviewStatus.NOT_PUBLISHED);
             review.setUser(user);
             review.setProduct(product);
             reviewRepository.save(review);
-//        }else{
-//            throw new RuntimeException(ErrorMessage.REVIEW_IS_NOT_POSSIBLE_MESSAGE);
-//        }
+        }else{
+            throw new RuntimeException(ErrorMessage.REVIEW_IS_NOT_POSSIBLE_MESSAGE);
+        }
         return  reviewMapper.reviewToReviewDTO(review);
     }
 
@@ -92,7 +88,7 @@ public class ReviewService {
             boolean isAdmin = userService.getCurrentUser().getRoles().stream().anyMatch(r->r.equals(role));
             if (isAdmin) {
                 if (status != null){
-                        predicates.add(cb.equal(root.get("status"),status));
+                    predicates.add(cb.equal(root.get("status"),status));
                 }
             }else throw new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND_MESSAGE);
         }catch(ResourceNotFoundException e){
